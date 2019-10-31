@@ -1,34 +1,34 @@
-import { Link } from "gatsby"
+import tw from "tailwind.macro"
+import {css} from "@emotion/core"
+import {Link} from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
+import DocNavigation from "./doc-navigation"
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
+const Navbar = tw.header`
+  w-1/6 p-2 m-0 bg-red-500
+`
+
+const SiteTitle = tw.h1`
+  m-0 text-red-200
+`
+const unstyledLink = css`
+  text-decoration: none; 
+  color: inherit;
+`
+
+const Header = ({siteTitle, allDocPages}) => (
+    <Navbar>
+      <SiteTitle>
         <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
+            to="/"
+            css={unstyledLink}
         >
           {siteTitle}
         </Link>
-      </h1>
-    </div>
-  </header>
+      </SiteTitle>
+      <DocNavigation allDocPages={allDocPages}/>
+    </Navbar>
 )
 
 Header.propTypes = {
