@@ -2,9 +2,7 @@ import React from "react"
 
 const Footer = () => (
     <footer>
-      © {new Date().getFullYear()}, Built with
-      {` `}
-      <a href="https://www.gatsbyjs.org">Gatsby</a>
+      © {new Date().getFullYear()}, <a href="https://twitter.com/_darrenburns">Darren Burns</a>
     </footer>
 )
 
