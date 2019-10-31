@@ -8,6 +8,7 @@ export default function Template({data}) {
   const {frontmatter, html} = markdownRemark
 
   const allDocPages = allMarkdownRemark.edges.map(edge => edge.node.frontmatter)
+
   return (
       <DocsLayout allDocPages={allDocPages}>
         <div className="page-container">

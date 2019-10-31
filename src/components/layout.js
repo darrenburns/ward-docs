@@ -1,16 +1,12 @@
 import React from "react"
-import PropTypes from "prop-types"
-import {graphql, useStaticQuery} from "gatsby"
-
-import Header from "./header"
-import "./layout.css"
-import tw from "tailwind.macro"
 import Footer from "./footer"
-import DocNavigation from "./doc-navigation"
+import tw from "tailwind.macro"
+import {graphql, useStaticQuery} from "gatsby"
+import Header from "./header"
 
-const DocsLayout = ({children, allDocPages}) => {
+const Layout = ({children}) => {
   const data = useStaticQuery(graphql`
-    query DocsSiteTitleQuery {
+    query SiteTitleQuery {
       site {
         siteMetadata {
           title
@@ -18,11 +14,10 @@ const DocsLayout = ({children, allDocPages}) => {
       }
     }
   `)
-
   return (
       <div style={tw`flex`}>
         <Header siteTitle={data.site.siteMetadata.title}>
-          <DocNavigation allDocPages={allDocPages}/>
+          Non-documentation navigation.
         </Header>
         <div
             style={{
@@ -37,10 +32,8 @@ const DocsLayout = ({children, allDocPages}) => {
         </div>
       </div>
   )
+
 }
 
-DocsLayout.propTypes = {
-  children: PropTypes.node.isRequired,
-}
+export default Layout
 
-export default DocsLayout
