@@ -1,8 +1,6 @@
 import React from "react"
 import {graphql} from "gatsby"
 import DocsLayout from "../components/docs-layout"
-import tw from "tailwind.macro"
-import DocNavigation from "../components/doc-navigation"
 
 export default function Template({data}) {
   const {markdownRemark} = data

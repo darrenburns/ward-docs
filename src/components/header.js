@@ -6,11 +6,11 @@ import React from "react"
 import DocNavigation from "./doc-navigation"
 
 const Navbar = tw.header`
-  w-1/6 p-2 m-0 bg-red-500
+  w-1/6 p-3 m-0 bg-blue-500
 `
 
 const SiteTitle = tw.h1`
-  m-0 text-red-200
+  p-1 m-0 text-blue-200
 `
 const unstyledLink = css`
   text-decoration: none; 

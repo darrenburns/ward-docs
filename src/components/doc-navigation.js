@@ -7,16 +7,16 @@ const DocNavigationContainer = tw.div`
 `
 
 const DocLink = tw.div`
-   p-4 font-sans text-lg text-left
+   p-2 font-sans text-lg text-left
 `
 
-const linkStyle = tw`no-underline text-gray-800`
+const linkStyle = tw`no-underline text-blue-100`
 
 export default function DocNavigation({allDocPages}) {
   return (
       <DocNavigationContainer>
         {allDocPages.map(p =>
-            <DocLink>
+            <DocLink key={p.path}>
               <Link to={p.path}
                     css={linkStyle}>
                 {p.title}
