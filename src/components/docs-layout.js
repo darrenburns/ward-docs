@@ -9,7 +9,8 @@ import Footer from "./footer"
 import Navigation, {NavigationLink, NavigationSectionHeader} from "./navigation"
 import {MainContent} from "./layout"
 
-
+const NavigationSection = tw.div``
+const NavigationSectionPages = tw.div``
 
 const DocsLayout = ({children, allDocPages}) => {
   const data = useStaticQuery(graphql`
@@ -21,18 +22,41 @@ const DocsLayout = ({children, allDocPages}) => {
       }
     }
   `)
+
+  const sections = allDocPages.reduce((accumulated, page) => {
+    const key = page.frontmatter.section || "user guide"
+    const current = accumulated[key]
+    if (!current) {
+      accumulated[key] = [page]
+    } else {
+      accumulated[key].push(page)
+    }
+    return accumulated
+  }, {})
+
+  const sectionsDom = Object.keys(sections).map(sectionName => {
+    const pagesInSection = sections[sectionName].map(page => (
+        <NavigationLink key={page.id} to={page.frontmatter.path}>
+          {page.frontmatter.title}
+        </NavigationLink>
+    ))
+    return (
+        <NavigationSection key={sectionName}>
+          <NavigationSectionHeader>
+            {sectionName}
+          </NavigationSectionHeader>
+          <NavigationSectionPages>
+            {pagesInSection}
+          </NavigationSectionPages>
+        </NavigationSection>
+    )
+  })
+
   return (
       <div style={tw`flex`}>
         <Sidebar siteTitle={data.site.siteMetadata.title}>
           <Navigation>
-            <NavigationSectionHeader>
-              Documentation
-            </NavigationSectionHeader>
-            {allDocPages.map(p =>
-                <NavigationLink key={p.id} to={p.frontmatter.path || p.id}>
-                  {p.frontmatter.title || p.id}
-                </NavigationLink>
-            )}
+            {sectionsDom}
           </Navigation>
         </Sidebar>
         <MainContent>
