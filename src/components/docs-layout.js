@@ -1,15 +1,15 @@
 import React from "react"
 import PropTypes from "prop-types"
 import {graphql, useStaticQuery} from "gatsby"
+import "./layout.css"
 
 import Sidebar from "./sidebar"
 import tw from "tailwind.macro"
-import css from "@emotion/styled"
 import Footer from "./footer"
 import Navigation, {NavigationLink, NavigationSectionHeader} from "./navigation"
 import {MainContent} from "./layout"
 
-const NavigationSection = tw.div``
+const NavigationSection = tw.div`border-b-2 border-green-500`
 const NavigationSectionPages = tw.div``
 
 const DocsLayout = ({children, allDocPages}) => {

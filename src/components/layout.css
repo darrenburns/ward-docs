@@ -1,0 +1,7 @@
+pre.language-python {
+    margin-bottom: 26px;
+}
+
+h2 > code {
+    font-size: inherit;
+}

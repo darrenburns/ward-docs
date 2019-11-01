@@ -8,32 +8,48 @@ const Navbar = tw.header`
   p-3 m-0 mr-16
 `
 
-const SiteTitle = tw.h1`
-  p-8 pb-0 m-0 mb-2 text-green-500 font-sans
+const SiteLogo = tw.h1`
+  pb-0 m-0 mt-1 text-green-600
 `
 
-const SiteDescription = tw.span`
-  pl-8
+const SiteTitle = tw.div`
+  text-gray-400 font-semibold
+`
+
+const SiteHeader = tw.div`
+  mt-8 ml-8 flex
+`
+
+const SiteDescription = tw.div`
+  text-sm
+`
+
+const SiteTitleAndDescription = tw.div`
+  flex-col ml-4
 `
 
 const unstyledLink = css`
-  text-decoration: none; 
-  color: inherit;
+  text-decoration: none;
 `
 
 const Sidebar = ({children, siteTitle}) => (
     <Navbar css={css`background-color: #272a36;`}>
-      <SiteTitle>
-        <Link
-            to="/"
-            css={unstyledLink}
-        >
-          {siteTitle}
-        </Link>
-      </SiteTitle>
-      <SiteDescription>
-        A Python testing framework.
-      </SiteDescription>
+      <SiteHeader>
+          <Link
+              to="/"
+              style={tw`text-green-600 no-underline`}
+          >
+            <SiteLogo css={css`font-size: 3.4rem`}>
+              W
+            </SiteLogo>
+          </Link>
+        <SiteTitleAndDescription>
+          <SiteTitle>{siteTitle}</SiteTitle>
+          <SiteDescription>
+            0.13.0a0
+          </SiteDescription>
+        </SiteTitleAndDescription>
+      </SiteHeader>
       {children}
     </Navbar>
 )

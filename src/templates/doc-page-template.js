@@ -2,6 +2,9 @@ import React from "react"
 import {graphql} from "gatsby"
 import DocsLayout from "../components/docs-layout"
 import tw from "tailwind.macro"
+import css from "@emotion/styled"
+
+const PageTitle = tw.h1`text-green-600`
 
 export default function Template({data}) {
   const {markdownRemark} = data
@@ -12,10 +15,9 @@ export default function Template({data}) {
 
   return (
       <DocsLayout allDocPages={allDocPages}>
-        <div>
-          <div style={tw`w-auto`}
-               dangerouslySetInnerHTML={{__html: html}}/>
-        </div>
+        <PageTitle>{markdownRemark.frontmatter.title}</PageTitle>
+        <div style={{...tw`w-auto`, ...css``}}
+             dangerouslySetInnerHTML={{__html: html}}/>
       </DocsLayout>
   )
 }
