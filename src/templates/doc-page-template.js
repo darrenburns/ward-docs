@@ -7,7 +7,7 @@ export default function Template({data}) {
   const {allMarkdownRemark} = data
   const {frontmatter, html} = markdownRemark
 
-  const allDocPages = allMarkdownRemark.edges.map(edge => edge.node.frontmatter)
+  const allDocPages = allMarkdownRemark.edges.map(edge => edge.node)
 
   return (
       <DocsLayout allDocPages={allDocPages}>
@@ -31,6 +31,7 @@ export const pageQuery = graphql`
     allMarkdownRemark {
       edges {
         node {
+          id
           frontmatter {
             title
             path

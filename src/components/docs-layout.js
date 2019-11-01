@@ -21,7 +21,6 @@ const DocsLayout = ({children, allDocPages}) => {
       }
     }
   `)
-
   return (
       <div style={tw`flex`}>
         <Sidebar siteTitle={data.site.siteMetadata.title}>
@@ -30,8 +29,8 @@ const DocsLayout = ({children, allDocPages}) => {
               Documentation
             </NavigationSectionHeader>
             {allDocPages.map(p =>
-                <NavigationLink key={p.path} to={p.path}>
-                  {p.title}
+                <NavigationLink key={p.id} to={p.frontmatter.path || p.id}>
+                  {p.frontmatter.title || p.id}
                 </NavigationLink>
             )}
           </Navigation>

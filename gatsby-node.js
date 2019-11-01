@@ -13,6 +13,7 @@ exports.createPages = async ({graphql, actions, reporter}) => {
         allMarkdownRemark {
           edges {
             node {
+              id
               html
               frontmatter {
                 title
@@ -35,7 +36,7 @@ exports.createPages = async ({graphql, actions, reporter}) => {
   result.data.allMarkdownRemark.edges.forEach(({node}) => {
     const path = node.frontmatter.path
     createPage({
-      path,
+      path: path || node.id,
       component: pageTemplate,
     })
   })
