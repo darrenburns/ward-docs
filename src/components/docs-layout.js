@@ -61,7 +61,6 @@ const DocsLayout = ({children, allDocPages}) => {
         </Sidebar>
         <MainContent>
           {children}
-          <Footer/>
         </MainContent>
       </div>
   )

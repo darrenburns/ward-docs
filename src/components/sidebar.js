@@ -3,9 +3,10 @@ import {css} from "@emotion/core"
 import {Link} from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
+import Footer from "./footer"
 
 const Navbar = tw.header`
-  p-3 m-0 mr-16
+  p-3 m-0 mr-16 border-solid border-green-700 border-0 border-r-2
 `
 
 const SiteLogo = tw.h1`
@@ -21,7 +22,7 @@ const SiteHeader = tw.div`
 `
 
 const SiteDescription = tw.div`
-  text-sm
+  text-sm font-mono text-gray-600
 `
 
 const SiteTitleAndDescription = tw.div`
@@ -51,6 +52,7 @@ const Sidebar = ({children, siteTitle}) => (
         </SiteTitleAndDescription>
       </SiteHeader>
       {children}
+      <Footer/>
     </Navbar>
 )
 

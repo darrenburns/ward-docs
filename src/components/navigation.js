@@ -6,7 +6,7 @@ import {Link} from "gatsby"
 const NavigationLinkWrapper = tw.div`
    p-2 font-sans text-left text-sm text-gray-400 rounded hover:bg-gray-800 hover:text-green-400 hover:font-semibold
 `
-export const linkStyle = tw`no-underline text-blue-700`
+export const linkStyle = tw`text-blue-700`
 export const NavigationLink = (props) => (
     <Link css={linkStyle} {...props}>
       <NavigationLinkWrapper>
@@ -15,7 +15,7 @@ export const NavigationLink = (props) => (
     </Link>
 )
 
-export const sectionHeaderStyle = tw`p-1 mt-2 uppercase font-sans text-sm text-green-600`
+export const sectionHeaderStyle = tw`ml-2 mt-2 uppercase text-sm text-green-600`
 export const NavigationSectionHeader = ({children}) => (
     <section style={sectionHeaderStyle}>
       {children}

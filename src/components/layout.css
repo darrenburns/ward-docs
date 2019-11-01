@@ -2,6 +2,11 @@ pre.language-python {
     margin-bottom: 26px;
 }
 
+a, a:visited {
+    color: #38a169;
+    text-decoration: none;
+}
+
 h2 > code {
     font-size: inherit;
 }

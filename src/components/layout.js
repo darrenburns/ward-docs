@@ -1,5 +1,4 @@
 import React from "react"
-import Footer from "./footer"
 import tw from "tailwind.macro"
 import {graphql, useStaticQuery} from "gatsby"
 import Sidebar from "./sidebar"
@@ -30,7 +29,6 @@ const Layout = ({children}) => {
         </Sidebar>
         <MainContent>
           {children}
-          <Footer/>
         </MainContent>
       </div>
   )
