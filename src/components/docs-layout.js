@@ -3,8 +3,8 @@ import PropTypes from "prop-types"
 import {graphql, useStaticQuery} from "gatsby"
 
 import Sidebar from "./sidebar"
-import "./layout.css"
 import tw from "tailwind.macro"
+import css from "@emotion/styled"
 import Footer from "./footer"
 import Navigation, {NavigationLink, NavigationSectionHeader} from "./navigation"
 import {MainContent} from "./layout"
@@ -53,7 +53,7 @@ const DocsLayout = ({children, allDocPages}) => {
   })
 
   return (
-      <div style={tw`flex`}>
+      <div style={{...tw`flex text-gray-500`, ...{backgroundColor: '#272125'}}}>
         <Sidebar siteTitle={data.site.siteMetadata.title}>
           <Navigation>
             {sectionsDom}

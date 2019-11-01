@@ -17,6 +17,7 @@
     "gatsby-plugin-react-helmet": "^3.1.13",
     "gatsby-plugin-react-svg": "^2.1.2",
     "gatsby-plugin-sharp": "^2.2.34",
+    "gatsby-plugin-typography": "~2.3.15",
     "gatsby-remark-images": "^3.1.28",
     "gatsby-remark-prismjs": "^3.3.20",
     "gatsby-source-filesystem": "^2.1.35",
@@ -28,7 +29,12 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1",
-    "tailwind.macro": "^1.0.0-alpha.10"
+    "react-typography": "~0.16.19",
+    "tailwind.macro": "^1.0.0-alpha.10",
+    "typography": "~0.16.19",
+    "typography-theme-doelger": "~0.16.19",
+    "typography-theme-fairy-gates": "~0.16.19",
+    "typography-theme-us-web-design-standards": "~0.16.19"
   },
   "devDependencies": {
     "prettier": "^1.18.2",

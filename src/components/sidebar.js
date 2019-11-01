@@ -5,11 +5,11 @@ import PropTypes from "prop-types"
 import React from "react"
 
 const Navbar = tw.header`
-  p-3 m-0
+  p-3 m-0 mr-16
 `
 
 const SiteTitle = tw.h1`
-  p-1 m-0 mb-2 text-blue-800
+  p-8 pb-0 m-0 mb-2 text-blue-800 font-sans
 `
 const unstyledLink = css`
   text-decoration: none; 
@@ -17,7 +17,7 @@ const unstyledLink = css`
 `
 
 const Sidebar = ({children, siteTitle}) => (
-    <Navbar>
+    <Navbar css={css`background-color: #272a36;`}>
       <SiteTitle>
         <Link
             to="/"

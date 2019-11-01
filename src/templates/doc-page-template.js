@@ -1,19 +1,19 @@
 import React from "react"
 import {graphql} from "gatsby"
 import DocsLayout from "../components/docs-layout"
+import tw from "tailwind.macro"
 
 export default function Template({data}) {
   const {markdownRemark} = data
   const {allMarkdownRemark} = data
-  const {frontmatter, html} = markdownRemark
+  const {html} = markdownRemark
 
   const allDocPages = allMarkdownRemark.edges.map(edge => edge.node)
 
   return (
       <DocsLayout allDocPages={allDocPages}>
-        <div className="page-container">
-          <h1>{frontmatter.title}</h1>
-          <div className="page-content-container"
+        <div>
+          <div style={tw`w-auto`}
                dangerouslySetInnerHTML={{__html: html}}/>
         </div>
       </DocsLayout>
