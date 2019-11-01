@@ -2,11 +2,14 @@ import React from "react"
 import PropTypes from "prop-types"
 import {graphql, useStaticQuery} from "gatsby"
 
-import Header from "./header"
+import Sidebar from "./sidebar"
 import "./layout.css"
 import tw from "tailwind.macro"
 import Footer from "./footer"
-import DocNavigation from "./doc-navigation"
+import Navigation, {NavigationLink, NavigationSectionHeader} from "./navigation"
+import {MainContent} from "./layout"
+
+
 
 const DocsLayout = ({children, allDocPages}) => {
   const data = useStaticQuery(graphql`
@@ -21,20 +24,22 @@ const DocsLayout = ({children, allDocPages}) => {
 
   return (
       <div style={tw`flex`}>
-        <Header siteTitle={data.site.siteMetadata.title}>
-          <DocNavigation allDocPages={allDocPages}/>
-        </Header>
-        <div
-            style={{
-              margin: `0 auto`,
-              maxWidth: 960,
-              padding: `0px 1.0875rem 1.45rem`,
-              paddingTop: 0,
-            }}
-        >
-          <main>{children}</main>
+        <Sidebar siteTitle={data.site.siteMetadata.title}>
+          <Navigation>
+            <NavigationSectionHeader>
+              Documentation
+            </NavigationSectionHeader>
+            {allDocPages.map(p =>
+                <NavigationLink key={p.path} to={p.path}>
+                  {p.title}
+                </NavigationLink>
+            )}
+          </Navigation>
+        </Sidebar>
+        <MainContent>
+          {children}
           <Footer/>
-        </div>
+        </MainContent>
       </div>
   )
 }

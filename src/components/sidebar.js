@@ -5,18 +5,18 @@ import PropTypes from "prop-types"
 import React from "react"
 
 const Navbar = tw.header`
-  w-1/6 p-3 m-0 bg-blue-500
+  p-3 m-0
 `
 
 const SiteTitle = tw.h1`
-  p-1 m-0 text-blue-200
+  p-1 m-0 mb-2 text-blue-800
 `
 const unstyledLink = css`
   text-decoration: none; 
   color: inherit;
 `
 
-const Header = ({children, siteTitle}) => (
+const Sidebar = ({children, siteTitle}) => (
     <Navbar>
       <SiteTitle>
         <Link
@@ -30,12 +30,12 @@ const Header = ({children, siteTitle}) => (
     </Navbar>
 )
 
-Header.propTypes = {
+Sidebar.propTypes = {
   siteTitle: PropTypes.string,
 }
 
-Header.defaultProps = {
+Sidebar.defaultProps = {
   siteTitle: ``,
 }
 
-export default Header
+export default Sidebar

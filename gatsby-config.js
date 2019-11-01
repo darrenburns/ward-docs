@@ -2,10 +2,18 @@ module.exports = {
   siteMetadata: {
     title: `Ward`,
     description: `A modern Python testing framework for finding flaws faster.`,
-    author: `@darrenburns`,
+    author: `Darren Burns`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /assets/
+        }
+      }
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
