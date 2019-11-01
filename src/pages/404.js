@@ -23,6 +23,7 @@ query LinksQuery {
       node {
         frontmatter {
           title
+          section
           path
         }
       }
