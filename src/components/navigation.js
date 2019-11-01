@@ -15,7 +15,7 @@ export const NavigationLink = (props) => (
     </Link>
 )
 
-export const sectionHeaderStyle = tw`ml-2 mt-2 uppercase text-sm text-green-600`
+export const sectionHeaderStyle = tw`ml-2 mt-2 mb-2 uppercase text-sm text-green-600`
 export const NavigationSectionHeader = ({children}) => (
     <section style={sectionHeaderStyle}>
       {children}

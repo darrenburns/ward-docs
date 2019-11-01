@@ -9,8 +9,8 @@ import Footer from "./footer"
 import Navigation, {NavigationLink, NavigationSectionHeader} from "./navigation"
 import {MainContent} from "./layout"
 
-const NavigationSection = tw.div`border-b-2 border-green-500`
-const NavigationSectionPages = tw.div``
+const NavigationSection = tw.div``
+const NavigationSectionPages = tw.div`mb-4`
 
 const DocsLayout = ({children, allDocPages}) => {
   const data = useStaticQuery(graphql`
