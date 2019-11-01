@@ -11,6 +11,11 @@ const Navbar = tw.header`
 const SiteTitle = tw.h1`
   p-8 pb-0 m-0 mb-2 text-blue-800 font-sans
 `
+
+const SiteDescription = tw.span`
+  pl-8
+`
+
 const unstyledLink = css`
   text-decoration: none; 
   color: inherit;
@@ -26,6 +31,9 @@ const Sidebar = ({children, siteTitle}) => (
           {siteTitle}
         </Link>
       </SiteTitle>
+      <SiteDescription>
+        A Python testing framework.
+      </SiteDescription>
       {children}
     </Navbar>
 )
