@@ -9,7 +9,7 @@ const Navbar = tw.header`
 `
 
 const SiteTitle = tw.h1`
-  p-8 pb-0 m-0 mb-2 text-blue-800 font-sans
+  p-8 pb-0 m-0 mb-2 text-green-500 font-sans
 `
 
 const SiteDescription = tw.span`
