@@ -9,7 +9,7 @@ const GiantLogo = tw.h1`
 `
 
 const IndexContentWrapper = tw.section`
-  text-left mt-16 px-6 lg:px-12 xl:px-32
+  text-left mt-16 px-6 lg:px-12 xl:px-32 pb-12
 `
 
 const IndexTextIntro = tw.h3`
@@ -61,19 +61,23 @@ const RedHighlight = tw.span`
 `
 
 const FeaturePaneList = tw.div`
-  block lg:flex border-green-600 p-1 my-4 border-solid border-2 border-l-0 border-r-0
+  block lg:flex 
+  my-4
+  border-green-600 
 `
 
 const FeaturePane = tw.div`
-  p-4 bg-black text-left rounded m-2
+  p-4 mr-2 mb-2 lg:mb-0
+  bg-black text-left rounded 
 `
 
 const FixturesExample = tw.div`
-  block lg:flex
+  block lg:flex mb-2
 `
 
 const TextEditor = tw.div`
-  p-4 pb-0 mr-2 rounded bg-black lg:flex-grow w-1/2
+  p-4 mr-2 mb-2 w-full lg:w-1/2 lg:mb-0
+  rounded bg-black
 `
 const TextEditorTab = tw.div`
   text-green-600 font-semibold bg-gray-900 rounded-t-lg w-3/5 p-2 text-center
@@ -171,46 +175,69 @@ const IndexPage = () => {
             Modular
           </IndexSectionHeading>
           <IndexSectionIntroText>
-            Manage test setup and teardown using fixtures that rely on Python's import system.
+            Manage test setup and teardown using fixtures cached to suit your needs.
           </IndexSectionIntroText>
-          <FixturesExample>
-            <TextEditor>
-              <TextEditorDescription>
-                {userTestFile.frontmatter.description}
-              </TextEditorDescription>
-              <TextEditorTab css={{marginBottom: -9}}>{userTestFile.frontmatter.fakeTabName}</TextEditorTab>
-              <TextEditorBody>
-                <div dangerouslySetInnerHTML={{__html: userTestFile.html}}/>
-              </TextEditorBody>
-            </TextEditor>
-            <TextEditor>
-              <TextEditorDescription>
-                {fixturesFile.frontmatter.description}
-              </TextEditorDescription>
-              <TextEditorTab css={{marginBottom: -9}}>{fixturesFile.frontmatter.fakeTabName}</TextEditorTab>
-              <TextEditorBody>
-                <div dangerouslySetInnerHTML={{__html: fixturesFile.html}}/>
-              </TextEditorBody>
-            </TextEditor>
-          </FixturesExample>
+          <IndexTextExample>
+            <FixturesExample>
+              <TextEditor>
+                <TextEditorDescription>
+                  {userTestFile.frontmatter.description}
+                </TextEditorDescription>
+                <TextEditorTab css={{marginBottom: -9}}>{userTestFile.frontmatter.fakeTabName}</TextEditorTab>
+                <TextEditorBody>
+                  <div dangerouslySetInnerHTML={{__html: userTestFile.html}}/>
+                </TextEditorBody>
+              </TextEditor>
+              <TextEditor>
+                <TextEditorDescription>
+                  {fixturesFile.frontmatter.description}
+                </TextEditorDescription>
+                <TextEditorTab css={{marginBottom: -9}}>{fixturesFile.frontmatter.fakeTabName}</TextEditorTab>
+                <TextEditorBody>
+                  <div dangerouslySetInnerHTML={{__html: fixturesFile.html}}/>
+                </TextEditorBody>
+              </TextEditor>
+            </FixturesExample>
+          </IndexTextExample>
 
-          <FeaturePaneList>
-            <FeaturePane>
-              <PassMarker css={tw`font-semibold px-2`}>CROSS PLATFORM</PassMarker>
-              <TerminalText css={tw`mt-2`}>Tested on Windows, Mac OS, and Linux systems.</TerminalText>
-            </FeaturePane>
-            <FeaturePane>
-              <PassMarker css={tw`font-semibold px-2`}>ZERO CONFIG</PassMarker>
-              <TerminalText css={tw`mt-2`}>Sensible defaults make configuration optional.</TerminalText>
-            </FeaturePane>
-            <FeaturePane>
-              <PassMarker css={tw`font-semibold px-2`}>TEST SEARCH</PassMarker>
-              <TerminalText css={tw`mt-2`}>Loose querying of test code for quick development.</TerminalText>
-            </FeaturePane>
-          </FeaturePaneList>
-
+          <IndexSectionHeading>
+            More features
+          </IndexSectionHeading>
+          <IndexTextExample>
+            <FeaturePaneList>
+              <FeaturePane>
+                <PassMarker css={tw`font-semibold px-2`}>CROSS PLATFORM</PassMarker>
+                <TerminalText css={tw`mt-2`}>Tested on Windows, Mac OS, and Linux systems.</TerminalText>
+              </FeaturePane>
+              <FeaturePane>
+                <PassMarker css={tw`font-semibold px-2`}>ZERO CONFIG</PassMarker>
+                <TerminalText css={tw`mt-2`}>Sensible defaults make configuration optional.</TerminalText>
+              </FeaturePane>
+              <FeaturePane>
+                <PassMarker css={tw`font-semibold px-2`}>TEST SEARCH</PassMarker>
+                <TerminalText css={tw`mt-2`}>Loose querying of test code for quick development.</TerminalText>
+              </FeaturePane>
+            </FeaturePaneList>
+          </IndexTextExample>
 
           {examplesFromMarkdown}
+
+          <IndexSectionHeading>
+            Interested?
+          </IndexSectionHeading>
+          <IndexTextExample>
+            <IndexSectionIntroText>
+              Ward is currently in development on <a href="https://github.com/darrenburns/ward">GitHub</a>, but all features listed on this on this page have already been implemented.
+            </IndexSectionIntroText>
+            <IndexSectionIntroText>
+              Ward is available on <a href="https://pypi.org/project/ward/">PyPI</a>, and can be installed using pip:
+            </IndexSectionIntroText>
+            <TerminalExample>
+              <TerminalText>
+                <Green>$</Green> pip install ward
+              </TerminalText>
+            </TerminalExample>
+          </IndexTextExample>
 
         </IndexContentWrapper>
       </DocsLayout>
