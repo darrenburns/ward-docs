@@ -5,7 +5,7 @@ import Sidebar from "./sidebar"
 import Navigation, {NavigationLink} from "./navigation"
 
 export const MainContent = tw.main`
-  pt-8 pl-0 mt-16 w-full
+  w-full
 `
 
 const Layout = ({children}) => {

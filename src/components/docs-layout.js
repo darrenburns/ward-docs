@@ -19,7 +19,7 @@ const DocsLayout = ({children}) => {
           title
         }
       }
-      allMarkdownPages: allMarkdownRemark {
+      allMarkdownPages: allMarkdownRemark(filter: {frontmatter: {type: {ne: "example"}}}) {
         edges {
           node {
             id
@@ -66,7 +66,7 @@ const DocsLayout = ({children}) => {
   })
 
   return (
-      <div style={{...tw`flex text-gray-500`, ...{backgroundColor: '#272125'}}}>
+      <div style={{...tw`flex text-gray-500`, ...{backgroundColor: '#21242a'}}}>
         <Sidebar siteTitle={data.siteMetadata.siteMetadata.title}>
           <Navigation>
             {sectionsDom}

@@ -6,15 +6,21 @@ import css from "@emotion/styled"
 
 const PageTitle = tw.h1`text-green-600`
 
+const MarkdownPageWrapper = tw.section`
+  py-8 pl-24 pr-64
+`
+
 export default function DocsPageTemplate({data}) {
   const {markdownRemark} = data
   const {html} = markdownRemark
 
   return (
       <DocsLayout>
-        <PageTitle>{markdownRemark.frontmatter.title}</PageTitle>
-        <div style={{...tw`w-auto`, ...css``}}
-             dangerouslySetInnerHTML={{__html: html}}/>
+        <MarkdownPageWrapper>
+          <PageTitle>{markdownRemark.frontmatter.title}</PageTitle>
+          <div style={{...tw`w-auto`, ...css``}}
+               dangerouslySetInnerHTML={{__html: html}}/>
+        </MarkdownPageWrapper>
       </DocsLayout>
   )
 }

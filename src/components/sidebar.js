@@ -6,7 +6,7 @@ import React from "react"
 import Footer from "./footer"
 
 const Navbar = tw.header`
-  p-3 m-0 border-solid border-green-700 border-0 border-r-2
+  p-0 m-0 border-solid border-green-700 border-0 border-r-2
 `
 
 const SiteLogo = tw.h1`
@@ -22,11 +22,11 @@ const SiteHeader = tw.div`
 `
 
 const SiteDescription = tw.div`
-  text-sm font-mono text-gray-600
+  text-xs font-mono text-gray-600
 `
 
 const SiteTitleAndDescription = tw.div`
-  flex-col ml-4
+  flex-col ml-2
 `
 
 const unstyledLink = css`
@@ -40,7 +40,7 @@ const Sidebar = ({children, siteTitle}) => (
               to="/"
               style={tw`text-green-600 no-underline`}
           >
-            <SiteLogo css={css`font-size: 3.4rem`}>
+            <SiteLogo css={css`font-size: 2.8rem`}>
               W
             </SiteLogo>
           </Link>

@@ -4,7 +4,7 @@ import {Link} from "gatsby"
 
 
 const NavigationLinkWrapper = tw.div`
-   p-2 font-sans text-left text-sm text-gray-400 rounded hover:bg-gray-800 hover:text-green-400 hover:font-semibold
+   p-2 font-sans text-left text-sm text-gray-400 rounded-l hover:bg-gray-800 hover:text-green-400 hover:font-semibold
 `
 export const linkStyle = tw`text-blue-700`
 export const NavigationLink = (props) => (

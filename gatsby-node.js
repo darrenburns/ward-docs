@@ -10,7 +10,7 @@ exports.createPages = async ({graphql, actions, reporter}) => {
   const result = await graphql(
       `
       {
-        allMarkdownRemark {
+        allMarkdownRemark(filter: {frontmatter: {type: {ne: "example"}}}) {
           edges {
             node {
               id
@@ -25,7 +25,6 @@ exports.createPages = async ({graphql, actions, reporter}) => {
       }
       `
   )
-
   if (result.errors) {
     reporter.panicOnBuild("Error while fetching pages.")
     return
