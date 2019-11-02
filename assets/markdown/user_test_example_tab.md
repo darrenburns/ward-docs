@@ -1,7 +1,7 @@
 ---
 type: "example-tab"
 fakeTabName: "test_users.py"
-description: "2. Import it and bind it as a default argument. Ward will resolve the value and inject it into your test."
+description: "2. Import it and bind it as a default argument. Ward will inject the resolved fixture into your test."
 ---
 ```python
 from user_fixtures import user

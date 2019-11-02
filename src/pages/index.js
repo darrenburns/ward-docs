@@ -9,15 +9,15 @@ const GiantLogo = tw.h1`
 `
 
 const IndexContentWrapper = tw.section`
-  text-center mt-16 lg:px-12 xl:px-32
+  text-left mt-16 px-6 lg:px-12 xl:px-32
 `
 
 const IndexTextIntro = tw.h3`
-  p-4 font-semibold
+  font-semibold
 `
 
 const IndexTextExample = tw.div`
-  p-4
+  p-0 mb-6
 `
 
 const IndexSectionHeading = tw.h2`
@@ -25,7 +25,7 @@ const IndexSectionHeading = tw.h2`
 `
 
 const IndexSectionIntroText = tw.p`
-  mb-0
+  mb-2
 `
 
 const TerminalExample = tw.div`
@@ -43,7 +43,6 @@ const ModuleName = tw.span`
 const TerminalText = tw.div`
   font-mono
   text-xs md:text-sm lg:text-md xl:text-lg whitespace-pre-wrap
-
 `
 
 const Red = tw.span`
@@ -70,14 +69,14 @@ const FeaturePane = tw.div`
 `
 
 const FixturesExample = tw.div`
-  flex p-2
+  block lg:flex
 `
 
 const TextEditor = tw.div`
-  p-4 pb-0 m-2 rounded bg-black flex-grow w-1/2
+  p-4 pb-0 mr-2 rounded bg-black lg:flex-grow w-1/2
 `
 const TextEditorTab = tw.div`
-  text-green-600 font-semibold bg-gray-900 rounded-t-lg w-3/5 p-2
+  text-green-600 font-semibold bg-gray-900 rounded-t-lg w-3/5 p-2 text-center
 `
 
 const TextEditorBody = tw.div`
@@ -131,7 +130,7 @@ const IndexPage = () => {
         <IndexContentWrapper>
           <GiantLogo css={{fontSize: 82}}>W</GiantLogo>
           <IndexTextIntro>
-            Ward is a modern testing framework for Python 3.6 and beyond.
+            Ward is a testing framework for Python 3.6 and beyond.
           </IndexTextIntro>
 
           <IndexSectionHeading>
@@ -172,7 +171,7 @@ const IndexPage = () => {
             Modular
           </IndexSectionHeading>
           <IndexSectionIntroText>
-            Manage test setup and teardown using fixtures that rely on Python's import system, not name matching.
+            Manage test setup and teardown using fixtures that rely on Python's import system.
           </IndexSectionIntroText>
           <FixturesExample>
             <TextEditor>

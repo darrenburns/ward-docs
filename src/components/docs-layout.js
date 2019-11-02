@@ -5,6 +5,7 @@ import "./layout.css"
 
 import Sidebar from "./sidebar"
 import tw from "tailwind.macro"
+import css from "@emotion/styled"
 import Navigation, {NavigationLink, NavigationSectionHeader} from "./navigation"
 import {MainContent} from "./layout"
 
@@ -61,7 +62,7 @@ const DocsLayout = ({children}) => {
   })
 
   return (
-      <div style={{...tw`flex text-gray-500`, ...{backgroundColor: '#21242a'}}}>
+      <div style={{...tw`flex text-gray-500`}}>
         <Sidebar>
           <Navigation>
             {sectionsDom}
