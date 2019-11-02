@@ -1,7 +1,6 @@
 import tw from "tailwind.macro"
 import {css} from "@emotion/core"
-import {Link} from "gatsby"
-import PropTypes from "prop-types"
+import {graphql, Link, useStaticQuery} from "gatsby"
 import React from "react"
 import Footer from "./footer"
 
@@ -29,13 +28,21 @@ const SiteTitleAndDescription = tw.div`
   flex-col ml-2
 `
 
-const unstyledLink = css`
-  text-decoration: none;
-`
-
-const Sidebar = ({children, siteTitle}) => (
-    <Navbar css={css`background-color: #272a36;`}>
-      <SiteHeader>
+const Sidebar = ({children}) => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+          latestVersion
+        }
+      }
+    }
+  `)
+  const siteTitle = data.site.siteMetadata.title
+  const latestVersion = data.site.siteMetadata.latestVersion
+  return (<Navbar css={css`background-color: #272a36;`}>
+        <SiteHeader>
           <Link
               to="/"
               style={tw`text-green-600 no-underline`}
@@ -44,24 +51,17 @@ const Sidebar = ({children, siteTitle}) => (
               W
             </SiteLogo>
           </Link>
-        <SiteTitleAndDescription>
-          <SiteTitle>{siteTitle}</SiteTitle>
-          <SiteDescription>
-            0.13.0a0
-          </SiteDescription>
-        </SiteTitleAndDescription>
-      </SiteHeader>
-      {children}
-      <Footer/>
-    </Navbar>
-)
-
-Sidebar.propTypes = {
-  siteTitle: PropTypes.string,
-}
-
-Sidebar.defaultProps = {
-  siteTitle: ``,
+          <SiteTitleAndDescription>
+            <SiteTitle>{siteTitle}</SiteTitle>
+            <SiteDescription>
+              {latestVersion}
+            </SiteDescription>
+          </SiteTitleAndDescription>
+        </SiteHeader>
+        {children}
+        <Footer/>
+      </Navbar>
+  )
 }
 
 export default Sidebar

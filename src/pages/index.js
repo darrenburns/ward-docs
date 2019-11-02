@@ -64,7 +64,7 @@ const FeaturePane = tw.div`
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
-      query GetExamples {
+    query {
       allMarkdownRemark(filter: {frontmatter: {type: {eq: "example"}}}) {
         edges {
           node {
