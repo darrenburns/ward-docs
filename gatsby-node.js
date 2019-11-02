@@ -9,8 +9,8 @@ exports.createPages = async ({graphql, actions, reporter}) => {
   const {createPage} = actions
   const result = await graphql(
       `
-      {
-        allMarkdownRemark(filter: {frontmatter: {type: {ne: "example"}}}) {
+      query {
+        allMarkdownRemark(filter: {frontmatter: {type: {nin: ["example", "example-tab"]}}}) {
           edges {
             node {
               id

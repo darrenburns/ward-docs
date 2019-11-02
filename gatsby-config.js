@@ -67,7 +67,7 @@ module.exports = {
       options: {
         name: `docs`,
         remote: `https://github.com/darrenburns/ward.git`,
-        branch: `docs-folder`,  // TODO: Update branch back to master when ready
+        branch: `master`,
         patterns: `docs/**`
       }
     },

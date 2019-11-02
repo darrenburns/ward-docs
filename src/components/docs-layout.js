@@ -14,7 +14,7 @@ const NavigationSectionPages = tw.div`mb-4`
 const DocsLayout = ({children}) => {
   const data = useStaticQuery(graphql`
     query {
-      allMarkdownRemark(filter: {frontmatter: {type: {ne: "example"}}}) {
+      allMarkdownRemark(filter: {frontmatter: {type: {nin: ["example", "example-tab"]}}}) {
         edges {
           node {
             id
