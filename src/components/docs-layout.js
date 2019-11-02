@@ -5,9 +5,9 @@ import "./layout.css"
 
 import Sidebar from "./sidebar"
 import tw from "tailwind.macro"
-import css from "@emotion/styled"
 import Navigation, {NavigationLink, NavigationSectionHeader} from "./navigation"
 import {MainContent} from "./layout"
+import {Location} from "@reach/router"
 
 const NavigationSection = tw.div``
 const NavigationSectionPages = tw.div`mb-4`
@@ -45,9 +45,16 @@ const DocsLayout = ({children}) => {
 
   const sectionsDom = Object.keys(sections).map(sectionName => {
     const pagesInSection = sections[sectionName].map(page => (
-        <NavigationLink key={page.id} to={page.frontmatter.path}>
-          {page.frontmatter.title}
-        </NavigationLink>
+        <Location key={page.id}>
+          {({location}) => {
+            const isActive = location.pathname === `${page.frontmatter.path}/`
+                || location.pathname === page.frontmatter.path
+            return (<NavigationLink key={page.id} to={page.frontmatter.path} isActive={isActive}>
+                  {page.frontmatter.title}
+                </NavigationLink>
+            )
+          }}
+        </Location>
     ))
     return (
         <NavigationSection key={sectionName}>

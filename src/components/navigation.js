@@ -4,16 +4,20 @@ import {Link} from "gatsby"
 
 
 const NavigationLinkWrapper = tw.div`
-   p-2 font-sans text-left text-sm text-gray-400 rounded-l hover:bg-gray-800 hover:text-green-400 hover:font-semibold
+   p-2 font-sans text-left text-sm text-gray-400 hover:bg-gray-800 hover:text-green-400 rounded-l hover:font-semibold
 `
-export const linkStyle = tw`text-blue-700`
-export const NavigationLink = (props) => (
-    <Link css={linkStyle} {...props}>
-      <NavigationLinkWrapper>
-        {props.children}
-      </NavigationLinkWrapper>
-    </Link>
-)
+export const ActiveNavigationLinkWrapper = tw.div`p-2 font-sans text-left text-sm text-green-400 border-0 border-l-2 border-solid border-green-500`
+
+export const NavigationLink = ({children, to, isActive}) => {
+  const NavLinkWrapper = isActive ? ActiveNavigationLinkWrapper : NavigationLinkWrapper
+  return (
+      <Link to={to}>
+        <NavLinkWrapper>
+          {children}
+        </NavLinkWrapper>
+      </Link>
+  )
+}
 
 export const sectionHeaderStyle = tw`ml-2 mt-2 mb-2 uppercase text-sm text-green-600`
 export const NavigationSectionHeader = ({children}) => (
