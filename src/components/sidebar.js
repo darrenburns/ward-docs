@@ -6,7 +6,7 @@ import React from "react"
 import Footer from "./footer"
 
 const Navbar = tw.header`
-  p-3 m-0 mr-16 border-solid border-green-700 border-0 border-r-2
+  p-3 m-0 border-solid border-green-700 border-0 border-r-2
 `
 
 const SiteLogo = tw.h1`

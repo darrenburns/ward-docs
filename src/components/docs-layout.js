@@ -5,23 +5,36 @@ import "./layout.css"
 
 import Sidebar from "./sidebar"
 import tw from "tailwind.macro"
-import Footer from "./footer"
 import Navigation, {NavigationLink, NavigationSectionHeader} from "./navigation"
 import {MainContent} from "./layout"
 
 const NavigationSection = tw.div``
 const NavigationSectionPages = tw.div`mb-4`
 
-const DocsLayout = ({children, allDocPages}) => {
+const DocsLayout = ({children}) => {
   const data = useStaticQuery(graphql`
-    query DocsSiteTitleQuery {
-      site {
+    query {
+      siteMetadata: site {
         siteMetadata {
           title
         }
       }
+      allMarkdownPages: allMarkdownRemark {
+        edges {
+          node {
+            id
+            frontmatter {
+              title
+              path
+              section
+            }
+          }
+        }
+      }
     }
   `)
+
+  const allDocPages = data.allMarkdownPages.edges.map(edge => edge.node)
 
   const sections = allDocPages.reduce((accumulated, page) => {
     const key = page.frontmatter.section || "user guide"
@@ -54,7 +67,7 @@ const DocsLayout = ({children, allDocPages}) => {
 
   return (
       <div style={{...tw`flex text-gray-500`, ...{backgroundColor: '#272125'}}}>
-        <Sidebar siteTitle={data.site.siteMetadata.title}>
+        <Sidebar siteTitle={data.siteMetadata.siteMetadata.title}>
           <Navigation>
             {sectionsDom}
           </Navigation>
