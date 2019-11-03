@@ -7,7 +7,7 @@ import css from "@emotion/styled"
 const PageTitle = tw.h1`text-green-600`
 
 const MarkdownPageWrapper = tw.section`
-  py-8 pl-24 pr-64
+  p-8 md:py-8 md:pl-24 md:pr-64
 `
 
 export default function DocsPageTemplate({data}) {

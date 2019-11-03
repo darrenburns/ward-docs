@@ -227,7 +227,8 @@ const IndexPage = () => {
           </IndexSectionHeading>
           <IndexTextExample>
             <IndexSectionIntroText>
-              Ward is currently in development on <a href="https://github.com/darrenburns/ward">GitHub</a>, but all features listed on this on this page have already been implemented.
+              Ward is currently in development on <a href="https://github.com/darrenburns/ward">GitHub</a>. <br/>
+              All features listed on this on this page have already been implemented, but the project is considered in a late alpha state.
             </IndexSectionIntroText>
             <IndexSectionIntroText>
               Ward is available on <a href="https://pypi.org/project/ward/">PyPI</a>, and can be installed using pip:
