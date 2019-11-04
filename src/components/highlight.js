@@ -5,19 +5,37 @@ import theme from 'prism-react-renderer/themes/palenight'
 
 export default ({children, className}) => {
   const language = className.replace(/language-/, ``)
+
+
+  function removeTrailingEmptyLine(tokens) {
+    const finalLineTokens = tokens[tokens.length - 1]
+    if (finalLineTokens.length === 1 && finalLineTokens[0].empty) {
+      tokens.pop()
+    }
+    return tokens
+  }
+
+  const lines = (tokens, getLineProps, getTokenProps) =>
+      removeTrailingEmptyLine(tokens).map((line, i) => {
+        return (
+            <div key={i} {...getLineProps({line, key: i})}>
+              {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({token, key})} />
+              ))}
+            </div>
+        )
+      })
+
+
+  const prismRenderer = ({className, style, tokens, getLineProps, getTokenProps}) => (
+      <pre className={className} style={{...style, padding: `20px`}}>
+          {lines(tokens, getLineProps, getTokenProps)}
+      </pre>
+  )
+
   return (
       <Highlight {...defaultProps} code={children} language={language} theme={theme}>
-        {({className, style, tokens, getLineProps, getTokenProps}) => (
-            <pre className={className} style={{...style, padding: `20px`}}>
-          {tokens.map((line, i) => (
-              <div key={i} {...getLineProps({line, key: i})}>
-                {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({token, key})} />
-                ))}
-              </div>
-          ))}
-        </pre>
-        )}
+        {prismRenderer}
       </Highlight>
   )
 }
