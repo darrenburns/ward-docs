@@ -6,6 +6,7 @@ module.exports = {
     author: `@_darrenburns`,
   },
   plugins: [
+    `gatsby-plugin-mdx`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-typography`,
@@ -33,6 +34,13 @@ module.exports = {
       options: {
         name: `markdown`,
         path: `${__dirname}/assets/markdown`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `mdx`,
+        path: `${__dirname}/src/pages/docs`,
       },
     },
     {

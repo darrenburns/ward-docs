@@ -15,7 +15,7 @@ const NavigationSectionPages = tw.div`mb-4`
 const DocsLayout = ({children}) => {
   const data = useStaticQuery(graphql`
     query {
-      allMarkdownRemark(filter: {frontmatter: {type: {nin: ["example", "example-tab"]}}}) {
+      apiDocs: allMarkdownRemark(filter: {frontmatter: {type: {eq: "apidocs"}}}) {
         edges {
           node {
             id
@@ -27,10 +27,25 @@ const DocsLayout = ({children}) => {
           }
         }
       }
+      userGuide: allMdx(filter: {frontmatter: {section: {eq: "user guide"}}}) {
+          edges {
+            node {
+              id
+              frontmatter {
+                path
+                title
+                section
+              }
+            }
+          }
+        }
     }
   `)
 
-  const allDocPages = data.allMarkdownRemark.edges.map(edge => edge.node)
+  const userGuidePages = data.userGuide.edges.map(edge => edge.node)
+  const apiDocsPages = data.apiDocs.edges.map(edge => edge.node)
+
+  const allDocPages = userGuidePages.concat(apiDocsPages)
 
   const sections = allDocPages.reduce((accumulated, page) => {
     const key = page.frontmatter.section || "user guide"
@@ -69,7 +84,7 @@ const DocsLayout = ({children}) => {
   })
 
   return (
-      <div style={{...tw`flex text-gray-500`}}>
+      <div style={{...tw`flex text-gray-400`}}>
         <Sidebar>
           <Navigation>
             {sectionsDom}

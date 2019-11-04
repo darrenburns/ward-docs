@@ -2,6 +2,7 @@
 type: "example-tab"
 fakeTabName: "user_fixtures.py"
 description: "1. Define test data anywhere, and tell Ward how long to cache it for."
+section: "example"
 ---
 ```python
 # Will run at most 1x per module

@@ -3,6 +3,15 @@ import SEO from "../components/seo"
 import {graphql, useStaticQuery} from "gatsby"
 import DocsLayout from "../components/docs-layout"
 import tw from "tailwind.macro"
+import TestOutputLine, {
+  Green,
+  GreenHighlight,
+  PassMarker,
+  Red,
+  RedHighlight,
+  TerminalExample,
+  TerminalText,
+} from "../components/ward-test-output"
 
 const GiantLogo = tw.h1`
   text-green-600
@@ -25,39 +34,7 @@ const IndexSectionHeading = tw.h2`
 `
 
 const IndexSectionIntroText = tw.p`
-  mb-2
-`
-
-const TerminalExample = tw.div`
-  bg-black rounded text-left font-mono p-4 
-`
-
-const PassMarker = tw.span`
-  bg-green-600 text-black p-1 font-mono
-`
-
-const ModuleName = tw.span`
-  text-gray-700
-`
-
-const TerminalText = tw.div`
-  font-mono
-  text-xs md:text-sm lg:text-md xl:text-lg whitespace-pre-wrap
-`
-
-const Red = tw.span`
-  text-red-600
-`
-
-const Green = tw.span`
-  text-green-600
-`
-
-const GreenHighlight = tw.span`
-  text-green-300 bg-green-600 font-semibold
-`
-const RedHighlight = tw.span`
-  text-red-300 bg-red-600 font-semibold
+  mb-2 text-base
 `
 
 const FeaturePaneList = tw.div`
@@ -141,16 +118,11 @@ const IndexPage = () => {
             Descriptive
           </IndexSectionHeading>
           <IndexSectionIntroText>
-            Describe your tests with strings, not <code style={tw`text-lg bg-gray-900 p-1`}>long_and_unreadable_function_names</code>.
+            Describe your tests with strings, not <code
+              style={tw`text-lg bg-gray-900 p-1`}>long_and_unreadable_function_names</code>.
           </IndexSectionIntroText>
           <IndexTextExample>
-            <TerminalExample>
-              <TerminalText>
-                <PassMarker>PASS</PassMarker>
-                <ModuleName> test_util:12: </ModuleName>
-                palindrome("noon") is True
-              </TerminalText>
-            </TerminalExample>
+            <TestOutputLine lineNumber="17" marker="PASS" moduleName="test_util" description="palindrome('noon') is True" />
           </IndexTextExample>
 
           <IndexSectionHeading>
@@ -228,7 +200,8 @@ const IndexPage = () => {
           <IndexTextExample>
             <IndexSectionIntroText>
               Ward is currently in development on <a href="https://github.com/darrenburns/ward">GitHub</a>. <br/>
-              All features listed on this on this page have already been implemented, but the project is considered in a late alpha state.
+              All features listed on this on this page have already been implemented, but the project is considered in a
+              late alpha state.
             </IndexSectionIntroText>
             <IndexSectionIntroText>
               Ward is available on <a href="https://pypi.org/project/ward/">PyPI</a>, and can be installed using pip:
