@@ -26,13 +26,13 @@ def contains(list_of_items, target_item):
     return False
 ```
 
-This function should return `True`, if the `target_item` is contained within `list_of_items`. Otherwise it should return `False`.
+This function should return `True` if the `target_item` is contained within `list_of_items`. Otherwise it should return `False`.
 
 ## Our first test
 
-Tests in ward are just Python functions annotated with the `@test(description: str)` decorator.
+Tests in ward are just Python functions decorated with `@test(description: str)`.
 
-Functions annotated with this decorator can be named `_`. We'll tell readers
+Functions with this decorator can be named `_`. We'll tell readers
  what the test does using a plain English description rather than the function name.
 
 Our test is contained within a file called `test_contains.py`:
@@ -49,7 +49,7 @@ def _():
 ```
 
 In this file, we've defined a single test function called `_`. It's been
-annotated with `@test`, and has a helpful description. We don't have to read the code inside the test to understand its purpose.
+decorated with `@test`, and has a helpful description. We don't have to read the code inside the test to understand its purpose.
 
 The description can be queried when running a subset of 
 tests. You may decide to use your own conventions inside the description
