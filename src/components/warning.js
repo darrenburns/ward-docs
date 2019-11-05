@@ -6,10 +6,10 @@ import remark2react from 'remark-react'
 import Children from 'react-children-utilities'
 
 const WarningStyle = tw.div`
-  border-0 border-l-4 border-solid border-orange-500 p-4 pb-2 m-0 
+  border-0 border-l-4 border-solid border-orange-500 p-4 pb-1 m-0 
 `
 export default ({children}) => (
-    <WarningStyle>
+    <WarningStyle css={{marginBottom: -5}}>
       {
         unified()
             .use(parse)

@@ -6,7 +6,8 @@ description: "2. Import it and bind it as a default argument. Ward will inject t
 ```python
 from user_fixtures import user
 
-@test("get_user(id=1) returns user 1")
-def _(u=user):
-    expect(get_user(id=1)).equals(u)
+@test("get_user returns the correct user")
+def _(expected=user):
+    found = get_user(id=u.id)
+    expect(found).equals(expected)
 ```

@@ -3,54 +3,151 @@ title: "Fixtures"
 path: "/guide/fixtures"
 section: "user guide"
 ---
-## Dependency injection with fixtures
+import TestOutputLine from "../../components/ward-test-output"
+import Warning from "../../components/warning"
 
-In the example below, we define a single fixture named `city_list`.
-We can supply this fixture as a default argument to a test, and Ward will resolve
-it and inject the value into the test. Unlike pytest, Ward doesn't rely
-on the parameter name matching the name of the fixture, and instead lets you make
-use of Python's import machinery to specify which fixture you want to
-inject.
+A *fixture* is a function that provides tests with the data they need in order to run.
+
+They provide a modular, composable alternative to `setup` and `teardown` methods that appear in many test frameworks.
+
+## Declaring and using a simple fixture
+
+We can declare a fixture using the `@fixture` decorator. Let's define a fixture that represents a user on a website.
 
 ```python
-from ward import test, expect, fixture
+from ward import fixture
 
 @fixture
-def city_list():
-    return ["Glasgow", "Edinburgh"]
-    
-@test("'Glasgow' should be contained in the list of cities")
-def _(cities=city_list):
-    expect("Glasgow").contained_in(cities)
+def user():
+    return User(id=1, name="sam")
 ```
 
-Fixtures can be injected into each other, using the same syntax.
+Now lets add a test that will make use of the `user` fixture.
 
-The fixture will be executed exactly once each time a test depends on it. 
+```python
+from ward import expect, test
 
-More specifically, if a fixture F is required by multiple other fixtures that are all injected into a single
-test, then F will only be resolved once.
+@test("fetch_user_by_id should return the expected User object")
+def _(expected_user=user):
+    fetched_user = fetch_user_by_id(id=expected_user.id)
+    expect(fetched_user).equals(expected_user)
+```
 
-Fixtures are great for extracting common setup code that you'd otherwise need to repeat at the top of your tests, 
-but they can also execute teardown code:
+By directly binding the fixture as a default argument to our test function, we've told Ward to resolve the
+fixture and inject it into our test. Inside our test, the variable `expected_user` is the object `User(id=1, name="sam")`.
+
+## Fixture scope
+
+By default, a fixture is executed immediately before each test it is injected into.
+
+If the code inside your fixtures is expensive to execute, it may not be practical to have it run before every test that depends on it.
+
+To solve this problem, Ward lets you *scope* your fixtures. The scope of a fixture determines how long it is cached for.
+
+Ward supports 3 scopes: `test` (default), `module`, and `global`.
+
+* A `test` scoped fixture will be evaluated at most once per test.
+* A `module` scoped fixture will be evaluated at most once per module.
+* A `global` scoped fixture will be evaluated at most once per invocation of `ward`.
+
+To make the `user` fixture `global` scope, we can change the decorator call to `@fixture(scope=Scope.Global)`.
+
+```python
+from ward import fixture, Scope
+
+@fixture(scope=Scope.Global)  # @fixture(scope="global") also works
+def user():
+    return User(id=1, name="sam")
+```
+
+This fixture will be executed and cached the first time it is injected into a test.
+
+Because it has a `global` scope, Ward will pass the cached value into all other tests that use it.
+
+If `user` instead had a scope of `Scope.Module`, then Ward would re-evaluate the fixture when it's required by a test in any other module.
+
+Careful management of fixture scope can drastically reduce the time and resources required to run a suite of tests.
+
+As a general rule of thumb, if the value returned by a fixture is immutable, or we know that no test will mutate it, then we can make it `global`. 
+
+<Warning>
+**Warning**: You should *never* mutate a `global` or `module` scoped fixture. Doing so breaks
+the isolated nature of tests, and introduces hidden dependencies between them.
+Ward will warn you if it detects a `global` or `module` scoped fixture has been mutated inside a test (coming in v1.0).
+</Warning>
+
+<br/>
+
+## Fixture composition
+
+Fixtures can be composed by injecting them into each other.
+
+You can inject a fixture into another fixture in the same way that you'd inject it into a test:
+by binding it as a default argument.
+
+```python
+@fixture
+def name():
+    return "sam"
+
+@fixture
+def user(name=name):
+    return {"name": name}
+
+@test("fixtures can be composed")
+def _(name=name, user=user):
+    expect(user["name"]).equals(name)
+```
+
+In the example above, `user` depends on `name`, and the test depends on both `user` and `name`. 
+Both fixtures are `test` scoped, so they are evaluated *at most once per test*.
+This means that the `name` instance that Ward passes into `user` is the same instance it passes into the test.
+
+<TestOutputLine marker="PASS" moduleName="test_composition" lineNumber="14" description="fixtures can be composed"/>
+
+<br/>
+
+## Running teardown code
+
+Fixtures have the ability to cleanup after themselves.
+
+For a fixture to run teardown code, it must be declared as a generator function.
+
+Notice how we `yield` the value of the fixture in the test below. Ward will inject the yielded value into the 
+test, and after the test has ran, all code below the `yield` will be executed.
 
 ```python
 from ward import test, expect, fixture
 
 @fixture
 def database():
+    print("1. I'm setting up the database!")
     db_conn = setup_database()
     yield db_conn
     db_conn.close()
-
+    print("3. I'm tearing down the database!")
 
 @test(f"Bob is one of the users contained in the database")
 def _(db=database):
-    # The database connection can be used in this test,
-    # and will be closed after the test has completed.
+    print("2. I'm running the test!")
     users = get_all_users(db)
     expect(users).contains("Bob")
 ```
 
-The code below the `yield` statement in a fixture will be executed after the test that depends on it completes,
-regardless of the result of the test. 
+The output captured by Ward whilst the test above runs is:
+
+```text
+1. I'm setting up the database!
+2. I'm running the test!
+3. I'm tearing down the database!
+```
+
+Global and module scoped fixtures can also contain teardown code.
+
+In the case of a module scoped fixture, the teardown code will run after the test module completes.
+
+In the case of a global scoped fixture, the teardown code will run after the whole test suite completes.
+
+If an exception occurs during the setup phase of the fixture, the teardown phase will not run.
+
+If an exception occurs during the running of a test, the teardown phase of on any fixtures that test depends on *will* run.
