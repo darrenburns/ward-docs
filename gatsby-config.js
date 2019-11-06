@@ -54,6 +54,9 @@ module.exports = {
             },
           },
           {
+            resolve: `gatsby-remark-autolink-headers`
+          },
+          {
             resolve: `gatsby-remark-prismjs`,
             options: {
               classPrefix: "language-",

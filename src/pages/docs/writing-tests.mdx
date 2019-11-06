@@ -3,6 +3,8 @@ title: "Writing tests"
 path: "/guide/writing-tests"
 section: "user guide"
 ---
+import Warning from "../../components/warning"
+
 ## Descriptive testing
 
 Test frameworks usually require that you describe how your tests work using
@@ -66,6 +68,99 @@ def test_capital_cities(cities=cities):
 ```
 
 Most methods on `expect` have inverted equivalents, e.g. `not_equals`, `not_satisfies`, etc.
+
+## Parameterised testing
+
+<Warning>This feature is a work in progress and is not available yet.</Warning>
+
+<br/>
+
+A parameterised test is where you define a single test that runs multiple times, 
+with different arguments being injected on each run.
+
+Ward supports parameterised testing by allowing multiple fixtures or
+values to be bound as a keyword argument using the `each` function:
+
+```python
+from ward import each, test
+
+ @test("an example of parameterisation")
+ def _(
+    a=each(1, 2, 3),
+    b=each(2, 4, 6),
+ ):
+    expect(a * 2).equals(b)
+```
+
+Although the example above is written as a single test,
+Ward will generate and run 3 distinct tests from it at run-time: one for each item passed into `each`.
+
+The variables `a` and `b` take the values `a=1` and `b=2` in the first test,
+`a=2` and `b=4` in the second test, and the third test will be passed the values `a=3` and `b=6`.
+
+If any of the items inside `each` is a fixture, that fixture will be resolved 
+and injected. Each of the test runs are considered *unique tests* from 
+a [fixture scoping](/guide/fixtures) perspective.
+
+<Warning>
+**Warning**: All occurrences of `each` in a test signature must contain the same number of arguments.
+</Warning>
+<br/>
+
+Using `each` in a test signature doesn't stop you from injecting other fixtures as normal.
+
+```python
+from ward import each, fixture, test
+
+@fixture
+def book_api():
+   return BookApi()
+
+@test("BookApi.get_book returns the correct book given an ISBN")
+def _(
+   api=book_api,
+   isbn=each("0765326353", "0765326361", "076532637X"),
+   name=each("The Way of Kings", "Words of Radiance", "Oathbringer"),
+)
+   book: Book = api.get_book(isbn)
+   expect(book.name).equals(name)
+```
+
+Ward will expand the parameterised test above into 3 distinct tests.
+
+In other words, the single parameterised test above is functionally equivalent to the 3 tests shown below.
+
+```python
+@test("[1/3] BookApi.get_book returns the correct book given an ISBN")
+def _(
+   api=book_api,
+   isbn="0765326353",
+   name="The Way of Kings",
+)
+   book: Book = api.get_book(isbn)
+   expect(book.name).equals(name)
+
+@test("[2/3] BookApi.get_book returns the correct book given an ISBN")
+def _(
+   api=book_api,
+   isbn="0765326361",
+   name="Words of Radiance",
+)
+   book: Book = api.get_book(isbn)
+   expect(book.name).equals(name)
+
+@test("[3/3] BookApi.get_book returns the correct book given an ISBN")
+def _(
+   api=book_api,
+   isbn="076532637X",
+   name="Oathbringer",
+)
+   book: Book = api.get_book(isbn)
+   expect(book.name).equals(name)
+```
+
+If you'd like to use the same `book_api` instance across each of the three generated tests, 
+you'd have to increase its scope to `module` or `global`.
 
 ## Working with mocks
 
