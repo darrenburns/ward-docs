@@ -163,6 +163,8 @@ def _(
 If you'd like to use the same `book_api` instance across each of the three generated tests, 
 you'd have to increase its scope to `module` or `global`.
 
+Currently, `each` can only be used in the signature of *tests*.
+
 ## Working with mocks
 
 `expect` works well with `unittest.mock`, by providing methods such as `expect.called`, `expect.called_once_with`, 
