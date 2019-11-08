@@ -23,10 +23,10 @@ export const Green = tw.span`
 `
 
 export const GreenHighlight = tw.span`
-  text-green-300 bg-green-600 font-semibold
+  text-green-200 bg-green-600 font-semibold
 `
 export const RedHighlight = tw.span`
-  text-red-300 bg-red-600 font-semibold
+  text-red-100 bg-red-600 font-semibold
 `
 
 export const ModuleName = tw.span`

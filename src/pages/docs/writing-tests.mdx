@@ -210,3 +210,8 @@ Check that a value is close to another value.
 expect(1.0).approx(1.01, abs_tol=0.2)  # pass
 expect(1.0).approx(1.01, abs_tol=0.001)  # fail
 ```
+
+## Using Hypothesis with Ward
+
+To use [Hypothesis](https://hypothesis.readthedocs.io) with Ward, you'll have to use the `@using` decorator
+to inject fixtures, because Hypothesis doesn't permit the use of default arguments.

@@ -36,6 +36,36 @@ def _(expected_user=user):
 By directly binding the fixture as a default argument to our test function, we've told Ward to resolve the
 fixture and inject it into our test. Inside our test, the variable `expected_user` is the object `User(id=1, name="sam")`.
 
+## The `@using` decorator
+
+An alternative approach to injecting fixtures into tests is the
+`@using` decorator.
+
+This approach lets us use positional arguments in our test signature, and 
+declare which fixture each argument refers to using the decorator.
+
+Here's how we'd inject our `user` fixture into a test with `using`: 
+
+```python
+from ward import expect, test, using
+
+@test("fetch_user_by_id should return the expected User object")
+@using(expected_user=user)
+def _(expected_user):
+    fetched_user = fetch_user_by_id(id=expected_user.id)
+    expect(fetched_user).equals(expected_user)
+```
+
+In the example above, we tell Ward to bind the resolved value of the 
+`user` fixture to the `expected_user` position argument.
+
+There are two main reasons to use `@using` over default arguments:
+
+1. You prefer the approach/API.
+2. You want to use something like [Hypothesis](https://hypothesis.readthedocs.io), which asserts 
+that your tests cannot have default arguments.
+
+
 ## Fixture scope
 
 By default, a fixture is executed immediately before each test it is injected into.
