@@ -1,3 +1,4 @@
+
 module.exports = {
   siteMetadata: {
     title: `Ward`,
@@ -8,6 +9,20 @@ module.exports = {
   plugins: [
     `gatsby-plugin-mdx`,
     `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID || "",
+        // Defines where to place the tracking script - `true` in the head and `false` in the body
+        head: false,
+        // Setting this parameter is optional
+        anonymize: true,
+        // Setting this parameter is also optional
+        respectDNT: true,
+        // Avoids sending pageview hits from custom paths
+        // Enables Google Optimize using your container Id
+      },
+    },
     {
       resolve: `gatsby-plugin-typography`,
       options: {
