@@ -1,4 +1,3 @@
-
 module.exports = {
   siteMetadata: {
     title: `Ward`,
@@ -13,14 +12,9 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: process.env.GOOGLE_ANALYTICS_ID || "",
-        // Defines where to place the tracking script - `true` in the head and `false` in the body
         head: false,
-        // Setting this parameter is optional
         anonymize: true,
-        // Setting this parameter is also optional
         respectDNT: true,
-        // Avoids sending pageview hits from custom paths
-        // Enables Google Optimize using your container Id
       },
     },
     {
@@ -106,7 +100,7 @@ module.exports = {
         background_color: `#272a36`,
         theme_color: `#272a36`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/ward-icon.png`, // This path is relative to the root of the site.
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
