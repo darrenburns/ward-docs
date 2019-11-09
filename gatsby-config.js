@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Ward`,
-    latestVersion: "0.16.0a0",
+    latestVersion: "0.17.0a0",
     description: `A modern Python testing framework for finding flaws faster.`,
     author: `@_darrenburns`,
   },
