@@ -43,13 +43,14 @@ Use `expect` to perform tests on objects by chaining together methods. Using `ex
 to provide detailed, highly readable output when your tests fail.
 
 ```python
-from ward import expect, fixture
+from ward import expect, fixture, test
 
 @fixture
 def cities():
     return {"edinburgh": "scotland", "tokyo": "japan", "madrid": "spain"}
 
-def test_capital_cities(cities=cities):
+@test("get_capitals_from_server should return the correct cities")
+def _(cities=cities):
     found_cities = get_capitals_from_server()
 
     (expect(found_cities)
