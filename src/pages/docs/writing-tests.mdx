@@ -37,15 +37,6 @@ FAIL  test_things: my_sum(1, 2) is equal to 3
 PASS  test_things: first_char('Win Butler') returns 'W'
 ```
 
-If you'd still prefer to name your tests using function names, you can do so
-by starting the name of your test function with `test_`:
-
-```python
-def test_my_sum_returns_the_sum_of_the_input_numbers():
-    total = my_sum(1, 2)
-    expect(total).equals(3)
-```
-
 ## The `expect` API
 
 Use `expect` to perform tests on objects by chaining together methods. Using `expect` allows Ward
