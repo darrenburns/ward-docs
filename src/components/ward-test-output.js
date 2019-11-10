@@ -9,8 +9,13 @@ export const PassMarker = tw.span`
   bg-green-600 text-black p-1 font-mono
 `
 
+export const FailMarker = tw.span`
+  bg-red-600 text-black p-1 font-mono
+`
+
 export const TerminalText = tw.div`
   font-mono
+  my-1
   text-xs sm:text-sm md:text-sm whitespace-pre-wrap
 `
 
@@ -33,14 +38,27 @@ export const ModuleName = tw.span`
   text-gray-700
 `
 
-const TestOutputLine = ({marker, moduleName, lineNumber, description}) => (
-    <TerminalExample>
+export const Flex = tw.div`flex`
+
+export const OutputLineLeftCol = tw.div`whitespace-no-wrap mr-2`
+export const OutputLineRightCol = tw.div``
+
+const TestOutputLine = ({marker, moduleName, lineNumber, description}) => {
+  const Marker = marker === "PASS" ? PassMarker : FailMarker
+  return (
       <TerminalText>
-        <PassMarker>{marker}</PassMarker>
-        <ModuleName> {moduleName}:{lineNumber}: </ModuleName>
-        {description}
+        <Flex>
+          <OutputLineLeftCol>
+            <Marker>{marker}</Marker>
+            <ModuleName> {moduleName}:{lineNumber}: </ModuleName>
+          </OutputLineLeftCol>
+          <OutputLineRightCol>
+            {description}
+          </OutputLineRightCol>
+
+        </Flex>
       </TerminalText>
-    </TerminalExample>
-)
+  )
+}
 
 export default TestOutputLine

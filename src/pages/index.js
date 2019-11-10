@@ -4,14 +4,18 @@ import {graphql, useStaticQuery} from "gatsby"
 import DocsLayout from "../components/docs-layout"
 import tw from "tailwind.macro"
 import TestOutputLine, {
+  Flex,
   Green,
   GreenHighlight,
+  OutputLineLeftCol,
+  OutputLineRightCol,
   PassMarker,
   Red,
   RedHighlight,
   TerminalExample,
   TerminalText,
 } from "../components/ward-test-output"
+import {Link} from "@reach/router"
 
 const GiantLogo = tw.h1`
   text-green-600
@@ -104,6 +108,7 @@ const IndexPage = () => {
 
   const userTestFile = inFileExamples.find(e => e.frontmatter.fakeTabName === "user_fixtures.py")
   const fixturesFile = inFileExamples.find(e => e.frontmatter.fakeTabName === "test_users.py")
+  const parameteriseFile = inFileExamples.find(e => e.frontmatter.fakeTabName === "test_utils.py")
 
   return (
       <DocsLayout>
@@ -115,18 +120,22 @@ const IndexPage = () => {
           </IndexTextIntro>
 
           <IndexSectionHeading>
-            Descriptive
+            Descriptive testing
           </IndexSectionHeading>
           <IndexSectionIntroText>
-            Describe your tests with strings, not <code
+            Describe your tests <Link to="/guide/writing-tests">with strings</Link>, not <code
               style={tw`text-lg bg-gray-900 p-1`}>long_and_unreadable_function_names</code>.
           </IndexSectionIntroText>
           <IndexTextExample>
-            <TestOutputLine lineNumber="17" marker="PASS" moduleName="test_util" description="palindrome('noon') is True" />
+            <TerminalExample>
+              <TestOutputLine lineNumber="17" marker="PASS" moduleName="test_util"
+                              description="palindrome('noon') is True"/>
+            </TerminalExample>
+
           </IndexTextExample>
 
           <IndexSectionHeading>
-            Readable
+            Readable output
           </IndexSectionHeading>
           <IndexSectionIntroText>
             Understand failures quickly with colourful unified diff output.
@@ -144,10 +153,10 @@ const IndexPage = () => {
 
 
           <IndexSectionHeading>
-            Modular
+            Modular test dependencies
           </IndexSectionHeading>
           <IndexSectionIntroText>
-            Manage test setup and teardown using fixtures cached to suit your needs.
+            Manage test setup and teardown using <Link to="/guide/fixtures">fixtures</Link> cached to suit your needs.
           </IndexSectionIntroText>
           <IndexTextExample>
             <FixturesExample>
@@ -170,6 +179,31 @@ const IndexPage = () => {
                 </TextEditorBody>
               </TextEditor>
             </FixturesExample>
+          </IndexTextExample>
+
+
+          <IndexSectionHeading>
+            Expressive parameterised testing
+          </IndexSectionHeading>
+          <IndexSectionIntroText>
+            <Link to="/guide/writing-tests">Parameterise tests</Link> to have Ward call your test multiple times with different arguments.
+          </IndexSectionIntroText>
+          <IndexTextExample>
+            <div dangerouslySetInnerHTML={{__html: parameteriseFile.html}}/>
+            <IndexSectionIntroText>Ward will expand this into 4 distinct tests, each with their own description:</IndexSectionIntroText>
+            <TerminalExample>
+              <TerminalText>
+                <TestOutputLine lineNumber="47 [1/4]" marker="PASS" moduleName="test_util"
+                                description="truncate('hello world', num_chars=20) returns 'hello world'"/>
+                <TestOutputLine lineNumber="47 [2/4]" marker="FAIL" moduleName="test_util"
+                                description="truncate('hello world', num_chars=11) returns 'hello world'"/>
+                <TestOutputLine lineNumber="47 [3/4]" marker="PASS" moduleName="test_util"
+                                description="truncate('hello world', num_chars=10) returns 'hello w...'"/>
+                <TestOutputLine lineNumber="47 [4/4]" marker="PASS" moduleName="test_util"
+                                description="truncate('hello world', num_chars=5) returns 'he...'"/>
+              </TerminalText>
+            </TerminalExample>
+
           </IndexTextExample>
 
           <IndexSectionHeading>
@@ -200,17 +234,24 @@ const IndexPage = () => {
           <IndexTextExample>
             <IndexSectionIntroText>
               Ward is currently in development on <a href="https://github.com/darrenburns/ward">GitHub</a>. <br/>
-              All features listed on this on this page have already been implemented, but the project is considered in a
-              late alpha state.
             </IndexSectionIntroText>
             <IndexSectionIntroText>
-              Ward is available on <a href="https://pypi.org/project/ward/">PyPI</a>, and can be installed using pip:
+              It's available on <a href="https://pypi.org/project/ward/">PyPI</a>, and can be installed using pip:
             </IndexSectionIntroText>
-            <TerminalExample>
-              <TerminalText>
-                <Green>$</Green> pip install ward
-              </TerminalText>
-            </TerminalExample>
+            <IndexTextExample>
+              <TerminalExample>
+                <TerminalText>
+                  <Flex>
+                    <OutputLineLeftCol>
+                      <Green>$</Green>
+                    </OutputLineLeftCol>
+                    <OutputLineRightCol>
+                      pip install ward
+                    </OutputLineRightCol>
+                  </Flex>
+                </TerminalText>
+              </TerminalExample>
+            </IndexTextExample>
           </IndexTextExample>
 
         </IndexContentWrapper>

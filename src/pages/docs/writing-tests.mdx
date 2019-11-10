@@ -15,20 +15,25 @@ Ward lets you describe your tests using strings, meaning you can be as descripti
 as you'd like:
 
 ```python
-from ward import expect, test
+from ward import expect, fixture, test
 
-NAME = "Win Butler"
+@fixture
+def name():
+    return "Win Butler"
 
-@test("my_sum(1, 2) is equal to 3")
-def _():
-    total = my_sum(1, 2)
-    expect(total).equals(3)
+@test("my_sum({a}, {b}) is equal to {result}")
+def _(a=1, b=2, result=3):
+    total = my_sum(a, b)
+    expect(total).equals(result)
     
-@test(f"first_char('{NAME}') returns '{NAME[0]}'")
-def _():
-    first_char = first_char(NAME)
-    expect(first_char).equals(NAME[0])
+@test("first_char('{name}') returns '{name[0]}'")
+def _(name=name):
+    first_char = first_char(name)
+    expect(first_char).equals(name[0])
 ```
+
+The description of a test is a [format string](https://docs.python.org/3/library/string.html#format-string-syntax), and may
+refer to any of the parameters present in the test signature. 
 
 During the test run, Ward will print the descriptive test name to the console:
 

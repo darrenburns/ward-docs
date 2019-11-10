@@ -3,7 +3,7 @@ title: "Fixtures"
 path: "/guide/fixtures"
 section: "user guide"
 ---
-import TestOutputLine from "../../components/ward-test-output"
+import TestOutputLine, {TerminalExample} from "../../components/ward-test-output"
 import Warning from "../../components/warning"
 
 A *fixture* is a function that provides tests with the data they need in order to run.
@@ -133,7 +133,9 @@ In the example above, `user` depends on `name`, and the test depends on both `us
 Both fixtures are `test` scoped, so they are evaluated *at most once per test*.
 This means that the `name` instance that Ward passes into `user` is the same instance it passes into the test.
 
-<TestOutputLine marker="PASS" moduleName="test_composition" lineNumber="14" description="fixtures can be composed"/>
+<TerminalExample>
+    <TestOutputLine marker="PASS" moduleName="test_composition" lineNumber="14" description="fixtures can be composed"/>
+</TerminalExample>
 
 <br/>
 
