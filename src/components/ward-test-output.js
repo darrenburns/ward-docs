@@ -2,7 +2,7 @@ import React from "react"
 import tw from "tailwind.macro"
 
 export const TerminalExample = tw.div`
-  bg-black rounded text-left font-mono p-4 
+  bg-black rounded text-left font-mono p-4 mb-4
 `
 
 export const PassMarker = tw.span`
@@ -27,6 +27,10 @@ export const Green = tw.span`
   text-green-600
 `
 
+export const Blue = tw.span`
+  text-blue-600
+`
+
 export const GreenHighlight = tw.span`
   text-green-200 bg-green-600 font-semibold
 `
@@ -43,7 +47,23 @@ export const Flex = tw.div`flex`
 export const OutputLineLeftCol = tw.div`whitespace-no-wrap mr-2`
 export const OutputLineRightCol = tw.div``
 
-const TestOutputLine = ({marker, moduleName, lineNumber, description}) => {
+export const TerminalCommand = ({children}) => (
+    <TerminalExample>
+      <TerminalText>
+        <Flex>
+          <OutputLineLeftCol>
+            <Green>$</Green>
+          </OutputLineLeftCol>
+          <OutputLineRightCol>
+            {children}
+          </OutputLineRightCol>
+
+        </Flex>
+      </TerminalText>
+    </TerminalExample>
+)
+
+export const TestOutputLine = ({marker, moduleName, lineNumber, description}) => {
   const Marker = marker === "PASS" ? PassMarker : FailMarker
   return (
       <TerminalText>
@@ -60,5 +80,3 @@ const TestOutputLine = ({marker, moduleName, lineNumber, description}) => {
       </TerminalText>
   )
 }
-
-export default TestOutputLine

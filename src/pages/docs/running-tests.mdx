@@ -3,6 +3,63 @@ title: "Running tests"
 path: "/guide/running-tests"
 section: "user guide"
 ---
+import {TerminalCommand, TestOutputLine, TerminalText, TerminalExample, Green, Red, Blue} from "../../components/ward-test-output"
+
+To find and run tests in your project, you can run `ward` without
+any arguments.
+
+<TerminalCommand>ward</TerminalCommand>
+
+This will recursively search through the current directory
+for modules with a name starting with `test_`, and execute
+any tests contained in the modules it finds.
+
+## Customising the output with `--test-output-style`
+
+<TerminalCommand>ward --test-output-style [<Blue>test-per-line</Blue>|<Blue>dots-module</Blue>|<Blue>dots-global</Blue>]</TerminalCommand>
+
+As your project grows, it may become impractical to print
+each test result on its own line. Ward provides alternative
+test output styles that can be configured using the
+`--test-output-style` option.
+
+### `test-per-line`
+The default test output of Ward looks like this (`--test-output-style=test-per-line`):
+
+<TerminalExample>
+    <TerminalText>
+      <TestOutputLine lineNumber="3" marker="PASS" moduleName="test_earth"
+                      description="it is not flat"/>
+      <TestOutputLine lineNumber="11" marker="PASS" moduleName="test_earth"
+                      description="24 hours to rotate"/>
+      <TestOutputLine lineNumber="4" marker="FAIL" moduleName="test_sun"
+                      description="it is hot"/>
+    </TerminalText>
+</TerminalExample>
+
+### `dots-module`
+If you run Ward with `--test-output-style=dots-module`, each
+module will be printed on its own line, and a single character
+will be used to represent the outcome of each test in that
+module:
+
+<TerminalExample>
+    <TerminalText>
+      tests/test_earth.py: <Green>..</Green><br/>
+      tests/test_sun.py: <Red>F</Red>
+    </TerminalText>
+</TerminalExample>
+
+### `dots-global`
+If that is still too verbose, you may wish to represent every
+test outcome with a single character, without grouping them by
+modules (`--test-output-style=dots-global`):
+
+<TerminalExample>
+    <TerminalText>
+      <Green>..</Green><Red>F</Red>
+    </TerminalText>
+</TerminalExample>
 
 ## Test selection
 

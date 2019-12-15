@@ -4,7 +4,7 @@ path: "/guide/tutorial"
 section: "user guide"
 ---
 import Warning from "../../components/warning"
-import TestOutputLine from "../../components/ward-test-output"
+import {TerminalExample, TestOutputLine} from "../../components/ward-test-output"
 
 In this tutorial, we'll write two tests using Ward. We'll define reusable test data in a fixture, 
 and pass that data into our tests. Finally, we'll look at how we can cache that test data to improve performance.
@@ -59,8 +59,9 @@ in order to make your tests highly queryable.
 Now we can run `ward` in our terminal. Ward will find and run the test, and
 confirm that the test pases with a message like the one below.
 
-<TestOutputLine marker="PASS" lineNumber="4" moduleName="test_contains" description="contains returns True when item is in list" />
-
+<TerminalExample>
+    <TestOutputLine marker="PASS" lineNumber="4" moduleName="test_contains" description="contains returns True when item is in list" />
+</TerminalExample>
 <br/>
 
 ## Extracting common setup code

@@ -3,7 +3,8 @@ import SEO from "../components/seo"
 import {graphql, useStaticQuery} from "gatsby"
 import DocsLayout from "../components/docs-layout"
 import tw from "tailwind.macro"
-import TestOutputLine, {
+import {
+  TestOutputLine,
   Flex,
   Green,
   GreenHighlight,
@@ -22,7 +23,7 @@ const GiantLogo = tw.h1`
 `
 
 const IndexContentWrapper = tw.section`
-  text-left mt-16 px-6 lg:px-12 xl:px-32 pb-12
+  text-left mt-16 px-6 lg:px-12 xl:px-26 pb-12
 `
 
 const IndexTextIntro = tw.h3`
@@ -42,7 +43,7 @@ const IndexSectionIntroText = tw.p`
 `
 
 const FeaturePaneList = tw.div`
-  block lg:flex 
+  block lg:flex
   my-4
   border-green-600 
 `
@@ -131,7 +132,6 @@ const IndexPage = () => {
               <TestOutputLine lineNumber="17" marker="PASS" moduleName="test_util"
                               description="palindrome('noon') is True"/>
             </TerminalExample>
-
           </IndexTextExample>
 
           <IndexSectionHeading>
@@ -186,11 +186,13 @@ const IndexPage = () => {
             Expressive parameterised testing
           </IndexSectionHeading>
           <IndexSectionIntroText>
-            <Link to="/guide/writing-tests">Parameterise tests</Link> to have Ward call your test multiple times with different arguments.
+            <Link to="/guide/writing-tests">Parameterise tests</Link> to have Ward call your test multiple times with
+            different arguments.
           </IndexSectionIntroText>
           <IndexTextExample>
             <div dangerouslySetInnerHTML={{__html: parameteriseFile.html}}/>
-            <IndexSectionIntroText>Ward will expand this into 4 distinct tests, each with their own description:</IndexSectionIntroText>
+            <IndexSectionIntroText>Ward will expand this into 4 distinct tests, each with their own
+              description:</IndexSectionIntroText>
             <TerminalExample>
               <TerminalText>
                 <TestOutputLine lineNumber="47 [1/4]" marker="PASS" moduleName="test_util"
