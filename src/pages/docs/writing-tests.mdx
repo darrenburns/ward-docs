@@ -3,7 +3,7 @@ title: "Writing tests"
 path: "/guide/writing-tests"
 section: "user guide"
 ---
-import {TestOutputLine, TerminalExample} from "../../components/ward-test-output"
+import {TestOutputLine, TerminalExample, XpassMarker, XfailMarker, SkipMarker, TerminalText} from "../../components/ward-test-output"
 import Warning from "../../components/warning"
 
 ## Descriptive testing
@@ -189,11 +189,65 @@ def _():
         1/0
 ```
 
+
+## Skipping a test
+
+Use the `@skip` decorator to tell Ward not to execute a test.
+
+```python
+from ward import skip
+
+@skip
+def test_to_be_skipped():
+    # ...
+```
+
+You can pass a `reason` to the `skip` decorator, and it will be printed
+next to the test name/description during the run.
+
+```python
+@skip("not implemented yet")
+@test("everything is okay")
+def _():
+    # ...
+```
+
+When we <SkipMarker>SKIP</SkipMarker> a test, like the one above, Ward will clearly highlight this
+in its output:
+
+<TerminalExample>
+    <TestOutputLine marker="SKIP" moduleName="test_things" lineNumber="14" description="everything is okay" note="[not implemented yet]"/>
+</TerminalExample>
+
+
 ## Expecting a test to fail
 
-You can mark a test that you expect to fail with the `@xfail` decorator. If a test
-marked with this decorator passes unexpectedly, the overall run will be
-considered a failure.
+You can mark a test that you expect to fail with the `@xfail` decorator. 
+
+```python
+from ward import xfail
+
+@xfail("its really not okay")
+@test("everything is okay")
+def _():
+    # ...
+```
+
+If a test decorated with `@xfail` *does* indeed fail as we expected, it is shown
+in the results as an <XfailMarker>XFAIL</XfailMarker>:
+
+<TerminalExample>
+    <TestOutputLine marker="XFAI" moduleName="test_things" lineNumber="14" description="everything is okay" note="[its really not okay]"/>
+</TerminalExample>
+
+If a test marked with this decorator passes unexpectedly, it is known as an <XpassMarker>XPASS</XpassMarker> (an unexpected pass), which will
+be displayed as shown below.
+
+<TerminalExample>
+    <TestOutputLine marker="XPAS" moduleName="test_things" lineNumber="14" description="everything is okay" note="[its really not okay]"/>
+</TerminalExample>
+
+If an <XpassMarker>XPASS</XpassMarker> occurs during a run, that run will be considered a failure.
 
 ## Testing for approximate equality
 

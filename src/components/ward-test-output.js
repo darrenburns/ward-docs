@@ -17,6 +17,14 @@ export const SkipMarker = tw.span`
   bg-blue-600 text-black p-1 font-mono
 `
 
+export const XfailMarker = tw.span`
+  bg-yellow-500 text-black p-1 font-mono
+`
+
+export const XpassMarker = tw.span`
+  bg-purple-600 text-black p-1 font-mono
+`
+
 export const TerminalText = tw.div`
   font-mono
   my-1
@@ -73,6 +81,10 @@ export const TestOutputLine = ({marker, moduleName, lineNumber, description, not
     Marker = FailMarker
   } else if (marker === "SKIP") {
     Marker = SkipMarker
+  } else if (marker === "XFAI") {
+    Marker = XfailMarker
+  } else if (marker === "XPAS") {
+    Marker = XpassMarker
   }
   return (
       <TerminalText>

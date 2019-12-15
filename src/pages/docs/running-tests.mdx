@@ -135,34 +135,6 @@ or regular expression matching.
 
 (TODO)
 
-## Skipping a test
-
-Use the `@skip` annotation to tell Ward not to execute a test.
-
-```python
-from ward import skip
-
-@skip
-def test_to_be_skipped():
-    # ...
-```
-
-You can pass a `reason` to the `skip` decorator, and it will be printed
-next to the test name/description during the run.
-
-```python
-@skip("not implemented yet")
-@test("everything is okay")
-def _():
-    # ...
-```
-
-Here's the output Ward will print to the console when it runs the test above:
-
-<TerminalExample>
-    <TestOutputLine marker="SKIP" moduleName="test_things" lineNumber="14" description="everything is okay" note="[not implemented yet]"/>
-</TerminalExample>
-
 ## Cancelling after a number of failures with `--fail-limit`
 
 <TerminalCommand>

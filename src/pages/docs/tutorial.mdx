@@ -4,7 +4,7 @@ path: "/guide/tutorial"
 section: "user guide"
 ---
 import Warning from "../../components/warning"
-import {TerminalCommand, TerminalExample, TestOutputLine} from "../../components/ward-test-output"
+import {TerminalCommand, TerminalExample, TestOutputLine, PassMarker} from "../../components/ward-test-output"
 
 In this tutorial, we'll write two tests using Ward. We'll define reusable test data in a fixture, 
 and pass that data into our tests. Finally, we'll look at how we can cache that test data to improve performance.
@@ -44,8 +44,8 @@ from ward import expect, test
 
 @test("contains returns True when item is in list")
 def _():
-    list_of_items = list(range(10))
-    result = contains(list_of_items, 5)
+    list_of_ints = list(range(100000))
+    result = contains(list_of_ints, 5)
     expect(result).equals(True)
 ```
 
@@ -63,7 +63,7 @@ ward
 </TerminalCommand>
 
 Ward will find and run the test, and
-confirm that the test pases with a message like the one below.
+confirm that the test <PassMarker>PASSED</PassMarker> with a message like the one below.
 
 <TerminalExample>
     <TestOutputLine marker="PASS" lineNumber="4" moduleName="test_contains" description="contains returns True when item is in list" />
@@ -77,8 +77,8 @@ Lets add another test.
 ```python
 @test("contains returns False when item is not in list")
 def _():
-    list_of_items = list(range(100000))
-    result = contains(list_of_items, -1)
+    list_of_ints = list(range(100000))
+    result = contains(list_of_ints, -1)
     expect(result).equals(False)
 ```
 
@@ -95,7 +95,7 @@ Lets define a fixture immediately above the tests we just wrote.
 from ward import fixture
 
 @fixture
-def list_of_items():
+def list_of_ints():
     return list(range(100000))
 ```
 
@@ -103,7 +103,7 @@ We can now rewrite our tests to make use of this fixture. Here's how we'd rewrit
 
 ```python
 @test("contains returns False when item is not in list")
-def _(l=list_of_items):
+def _(l=list_of_ints):
     result = contains(l, -1)
     expect(result).equals(False)
 ```
@@ -112,7 +112,7 @@ By binding the name of the fixture as a default argument to the test, Ward will
 resolve it before the test runs, and inject it into the test. 
 
 By default, a fixture is executed immediately before being injected into
-a test. In the case of `list_of_items`, that could be problematic if lots of tests
+a test. In the case of `list_of_ints`, that could be problematic if lots of tests
 depend on it. Do we really want to instantiate a list of 100000 integers before
 each of those tests? Probably not.
 
@@ -126,13 +126,15 @@ Ward supports 3 scopes: `test` (default), `module`, and `global`.
 * A `module` scoped fixture will be evaluated at most once per test module.
 * A `global` scoped fixture will be evaluated at most once per invocation of `ward`.
 
-We can safely say that we only need to generate our `list_of_items` once, and we can reuse its value in every test that depends on it. So lets give it a `global` scope:
+If a fixture is never injected into a test or another fixture, it will never be evaluated.
+
+We can safely say that we only need to generate our `list_of_ints` once, and we can reuse its value in every test that depends on it. So lets give it a `global` scope:
 
 ```python
 from ward import fixture, Scope
 
 @fixture(scope=Scope.Global)  # or scope="global"
-def list_of_items():
+def list_of_ints():
     return list(range(100000))
 ```
 
