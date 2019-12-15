@@ -14,6 +14,23 @@ This will recursively search through the current directory
 for modules with a name starting with `test_`, and execute
 any tests contained in the modules it finds.
 
+
+## Specifying test directories
+
+<TerminalCommand>
+ward --path <Blue>PATH_TO_TESTS</Blue>
+</TerminalCommand>
+
+You can run tests in a specific directory using the `--path` option.
+For example, to run all tests inside a directory called `tests`:
+
+<TerminalCommand>
+ward --path <Blue>"tests"</Blue>
+</TerminalCommand>
+
+To run tests in the current directory, you can just type `ward`, which
+is functionally equivalent to `ward --path .`
+
 ## Customising the output with `--test-output-style`
 
 <TerminalCommand>ward --test-output-style [<Blue>test-per-line</Blue>|<Blue>dots-module</Blue>|<Blue>dots-global</Blue>]</TerminalCommand>
@@ -23,7 +40,7 @@ each test result on its own line. Ward provides alternative
 test output styles that can be configured using the
 `--test-output-style` option.
 
-### `test-per-line`
+### `test-per-line` (default)
 The default test output of Ward looks like this (`--test-output-style=test-per-line`):
 
 <TerminalExample>
@@ -61,9 +78,9 @@ modules (`--test-output-style=dots-global`):
     </TerminalText>
 </TerminalExample>
 
-## Test selection
+## Approximate test selection with `--search`
 
-### Search and run matching tests with `--search`
+<TerminalCommand>ward --search <Blue>QUERY</Blue></TerminalCommand>
 
 You can choose to limit which tests are collected and ran by Ward 
 using the `--search STRING` option. Test names, descriptions *and test function bodies*
@@ -71,40 +88,37 @@ will be searched, and those which contain `STRING` will be ran. Here are
 some examples:
 
 **Run all tests that call the `fetch_users` function:**
-```text
-ward --search "fetch_users("
-```
+
+<TerminalCommand>
+    ward --search <Blue>"fetch_users("</Blue>
+</TerminalCommand>
+
 
 **Run all tests that check if a `ZeroDivisionError` is raised:**
-```text
-ward --search "raises(ZeroDivisionError)"
-```
+
+<TerminalCommand>
+ward --search <Blue>"raises(ZeroDivisionError)"</Blue>
+</TerminalCommand>
 
 **Run all tests decorated with the `@xfail` decorator:**
-```text
-ward --search "@xfail"
-```
-
-**Run a test called `test_the_sky_is_blue`:**
-
-```text
-ward --search test_the_sky_is_blue
-```
+<TerminalCommand>
+ward --search <Blue>"@xfail"</Blue>
+</TerminalCommand>
 
 **Run a test described as `"my_function should return False"`:**
 
-```text
-ward --search "my_function should return False"
-```
+<TerminalCommand>
+ward --search <Blue>"my_function should return False"</Blue>
+</TerminalCommand>
 
 **Running tests inside a module:**
 
 The search takes place on the fully qualified name, so you can run a single
 module (e.g. `my_module`) using the following command:
 
-```text
-ward --search my_module.
-```
+<TerminalCommand>
+ward --search <Blue>my_module.</Blue>
+</TerminalCommand>
 
 Of course, if a test name or body contains the string `"my_module."`, that test
 will also be selected and ran. 
@@ -112,7 +126,7 @@ will also be selected and ran.
 This approach is useful for quickly querying tests and running those which match a
 simple query, making it useful for development.
 
-### Specific test selection
+## Specific test selection
 
 Sometimes you want to be very specific when declaring which tests to run.
 
@@ -120,18 +134,6 @@ Ward will provide an option to query tests on name and description using substri
 or regular expression matching.
 
 (TODO)
-
-### Running tests in a directory
-
-You can run tests in a specific directory using the `--path` option.
-For example, to run all tests inside a directory called `tests`:
-
-```text
-ward --path tests
-```
-
-To run tests in the current directory, you can just type `ward`, which
-is functionally equivalent to `ward --path .`
 
 ## Skipping a test
 
@@ -157,15 +159,19 @@ def _():
 
 Here's the output Ward will print to the console when it runs the test above:
 
-```text
-SKIP  test_things: everything is okay  [not implemented yet]
-```
+<TerminalExample>
+    <TestOutputLine marker="SKIP" moduleName="test_things" lineNumber="14" description="everything is okay" note="[not implemented yet]"/>
+</TerminalExample>
 
-## Cancelling a run after a specific number of failures
+## Cancelling after a number of failures with `--fail-limit`
+
+<TerminalCommand>
+ward --fail-limit <Blue>LIMIT</Blue>
+</TerminalCommand>
 
 If you wish for Ward to cancel a run immediately after a specific number of failing tests,
 you can use the `--fail-limit` option. To have a run end immediately after 5 tests fail:
 
-```text
-ward --fail-limit 5
-```
+<TerminalCommand>
+ward --fail-limit <Blue>5</Blue>
+</TerminalCommand>

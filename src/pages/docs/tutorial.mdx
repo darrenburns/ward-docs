@@ -4,7 +4,7 @@ path: "/guide/tutorial"
 section: "user guide"
 ---
 import Warning from "../../components/warning"
-import {TerminalExample, TestOutputLine} from "../../components/ward-test-output"
+import {TerminalCommand, TerminalExample, TestOutputLine} from "../../components/ward-test-output"
 
 In this tutorial, we'll write two tests using Ward. We'll define reusable test data in a fixture, 
 and pass that data into our tests. Finally, we'll look at how we can cache that test data to improve performance.
@@ -13,9 +13,9 @@ and pass that data into our tests. Finally, we'll look at how we can cache that 
 
 Ward is available on [PyPI](https://pypi.org/project/ward/), so it can be installed using `pip`.
 
-```text
+<TerminalCommand>
 pip install ward
-```
+</TerminalCommand>
 
 When you run `ward` with no arguments, it will recursively look for tests starting from your current directory.
 
@@ -56,7 +56,13 @@ The description can be queried when running a subset of
 tests. You may decide to use your own conventions inside the description
 in order to make your tests highly queryable.
 
-Now we can run `ward` in our terminal. Ward will find and run the test, and
+Now we can run `ward` in our terminal:
+
+<TerminalCommand>
+ward
+</TerminalCommand>
+
+Ward will find and run the test, and
 confirm that the test pases with a message like the one below.
 
 <TerminalExample>

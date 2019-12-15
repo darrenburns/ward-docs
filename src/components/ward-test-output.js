@@ -13,6 +13,10 @@ export const FailMarker = tw.span`
   bg-red-600 text-black p-1 font-mono
 `
 
+export const SkipMarker = tw.span`
+  bg-blue-600 text-black p-1 font-mono
+`
+
 export const TerminalText = tw.div`
   font-mono
   my-1
@@ -38,7 +42,7 @@ export const RedHighlight = tw.span`
   text-red-100 bg-red-600 font-semibold
 `
 
-export const ModuleName = tw.span`
+export const Grey = tw.span`
   text-gray-700
 `
 
@@ -63,19 +67,23 @@ export const TerminalCommand = ({children}) => (
     </TerminalExample>
 )
 
-export const TestOutputLine = ({marker, moduleName, lineNumber, description}) => {
-  const Marker = marker === "PASS" ? PassMarker : FailMarker
+export const TestOutputLine = ({marker, moduleName, lineNumber, description, note}) => {
+  let Marker = PassMarker
+  if (marker === "FAIL") {
+    Marker = FailMarker
+  } else if (marker === "SKIP") {
+    Marker = SkipMarker
+  }
   return (
       <TerminalText>
         <Flex>
           <OutputLineLeftCol>
             <Marker>{marker}</Marker>
-            <ModuleName> {moduleName}:{lineNumber}: </ModuleName>
+            <Grey> {moduleName}:{lineNumber}: </Grey>
           </OutputLineLeftCol>
           <OutputLineRightCol>
-            {description}
+            {description}  <Grey>{note}</Grey>
           </OutputLineRightCol>
-
         </Flex>
       </TerminalText>
   )
