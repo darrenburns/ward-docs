@@ -76,13 +76,17 @@ Ward supports parameterised testing by allowing multiple fixtures or
 values to be bound as a keyword argument using the `each` function:
 
 ```python
-from ward import each, test
+from ward import each, fixture, test
 
- @test("an example of parameterisation")
- def _(
+@fixture
+def six():
+    return 6
+
+@test("an example of parameterisation")
+def _(
     a=each(1, 2, 3),
-    b=each(2, 4, 6),
- ):
+    b=each(2, 4, six),
+):
     expect(a * 2).equals(b)
 ```
 

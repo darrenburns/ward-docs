@@ -3,7 +3,7 @@ title: "Running tests"
 path: "/guide/running-tests"
 section: "user guide"
 ---
-import {TerminalCommand, TestOutputLine, TerminalText, TerminalExample, Green, Red, Blue} from "../../components/ward-test-output"
+import {TerminalCommand, TestOutputLine, TerminalText, TerminalExample, Green, Grey, Red, Blue} from "../../components/ward-test-output"
 
 To find and run tests in your project, you can run `ward` without
 any arguments.
@@ -62,8 +62,8 @@ module:
 
 <TerminalExample>
     <TerminalText>
-      tests/test_earth.py: <Green>..</Green><br/>
-      tests/test_sun.py: <Red>F</Red>
+      <Grey>tests/</Grey>test_earth.py: <Green>..</Green><br/>
+      <Grey>tests/</Grey>test_sun.py: <Red>F</Red>
     </TerminalText>
 </TerminalExample>
 
