@@ -156,11 +156,28 @@ def _(
 
 Pytest also lets you parameterise fixtures themselves. Ward does not support this.
 
-## Command line usage
-
-TODO
-
 ## Output
+
+A comparison between the output of Pytest and Ward is shown below.
+
+Pytest was run with the `-v` flag in order to display the full diffs
+for failing tests. Unfortunately, when you run pytest with `-v`, *all*
+of the output becomes more verbose. If you want to see a full diff for 
+any tests that fail, you have to accept that pytest will print each test
+on a separate line during the run:
+
+![pytest-output](../../images/pytest-output.png)
+
+Ward relies on colours rather than symbols to present diffs:
+
+![ward-output](../../images/ward-output.png)
+
+There's currently no option in Ward to get a symbolic diff for
+failing tests, meaning if your terminal or CI server doesn't support
+coloured output, diffs will be useless. This is a known limitation and
+will be fixed in a future iteration.
+
+## Command line usage
 
 TODO
 
@@ -170,4 +187,5 @@ Pytest is a mature production ready testing framework. On the other hand, Ward h
 
 ## Extensibility
 
-TODO
+Pytest has a plugin system powered by `pluggy`. Ward does not yet have a
+plugin system.
