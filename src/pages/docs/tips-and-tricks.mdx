@@ -1,0 +1,24 @@
+---
+title: "Tips & tricks"
+path: "/guide/tips-and-tricks"
+section: "user guide"
+---
+import {TerminalCommand, Blue} from "../../components/ward-test-output"
+
+## Tagging tests
+Use the free-form nature of test descriptions to your advantage.
+Put tags in your test descriptions to make it easy to select and
+ run a specific subset of tests.
+
+For example, you could mark tests with performance issues as "slow":
+
+```python
+@test("[slow] fetch the entire transaction log")
+def _(client=client):
+    log = client.fetch_entire_log()
+    expect(log).equals([6, 2, 3, 1, 50])
+```  
+
+Now you can run all tests that have been tagged as such:
+
+<TerminalCommand>ward --search <Blue>"[slow]"</Blue></TerminalCommand>
