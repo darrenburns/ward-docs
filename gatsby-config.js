@@ -6,7 +6,17 @@ module.exports = {
     author: `@_darrenburns`,
   },
   plugins: [
-    `gatsby-plugin-mdx`,
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+          }
+        ]
+      }
+
+    },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-google-analytics`,

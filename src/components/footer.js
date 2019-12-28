@@ -8,6 +8,7 @@ const FooterWrapper = tw.footer`
 
 const Footer = () => (
     <FooterWrapper>
+      <a href="https://github.com/darrenburns/ward">Ward on GitHub</a><br/>
       © {new Date().getFullYear()} <a href="https://twitter.com/_darrenburns">Darren Burns</a>
     </FooterWrapper>
 )
