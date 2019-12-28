@@ -22,3 +22,25 @@ def _(client=client):
 Now you can run all tests that have been tagged as such:
 
 <TerminalCommand>ward --search <Blue>"[slow]"</Blue></TerminalCommand>
+
+Another pattern I've found useful is tagging tests with the 
+name of the function or method they're testing so that I can easily
+run all tests that test a specific method. For example "run all
+tests that test the `MyCounter.increment` method":
+
+```python
+@test("[MyCounter.increment] works for negative integers")
+def _():
+    m = MyCounter(initial=-1)
+    expect(m.increment()).equals(0)
+    
+@test("[MyCounter.increment] works for positive integers")
+def _():
+    m = MyCounter(initial=1)
+    expect(m.increment()).equals(2)
+```
+
+Now if we wished to run only tests that probe the `MyCounter.increment` method,
+we can run the following command:
+
+<TerminalCommand>ward --search <Blue>"[MyCounter.increment]"</Blue></TerminalCommand>
