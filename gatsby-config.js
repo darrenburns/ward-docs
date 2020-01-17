@@ -1,7 +1,10 @@
+latestVersion = "0.22.0b0"
+
 module.exports = {
   siteMetadata: {
     title: `Ward`,
-    latestVersion: "0.21.0a0",
+    latestVersion,
+    githubVersionUrl: `https://github.com/darrenburns/ward/releases/tag/release%2F${latestVersion}`,
     description: `A modern Python testing framework for finding flaws faster.`,
     author: `@_darrenburns`,
   },

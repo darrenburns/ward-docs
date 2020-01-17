@@ -35,12 +35,14 @@ const Sidebar = ({children}) => {
         siteMetadata {
           title
           latestVersion
+          githubVersionUrl
         }
       }
     }
   `)
   const siteTitle = data.site.siteMetadata.title
   const latestVersion = data.site.siteMetadata.latestVersion
+  const githubVersionUrl = data.site.siteMetadata.githubVersionUrl
   return (<Navbar css={css`background-color: #272a36;`}>
         <SiteHeader>
           <Link
@@ -54,7 +56,7 @@ const Sidebar = ({children}) => {
           <SiteTitleAndDescription>
             <SiteTitle>{siteTitle}</SiteTitle>
             <SiteDescription>
-              {latestVersion}
+              <a href={githubVersionUrl}>{latestVersion}</a>
             </SiteDescription>
           </SiteTitleAndDescription>
         </SiteHeader>
