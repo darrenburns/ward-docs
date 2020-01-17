@@ -20,6 +20,15 @@ module.exports = {
       }
 
     },
+    {
+      resolve: `gatsby-plugin-algolia-docsearch`,
+      options: {
+        apiKey: "6566bf9cc0d24e52dd892df1208f9c1b", // required
+        indexName: "wardpy", // required
+        inputSelector: "#doc-search", // required
+        debug: false // (bool) Optional. Default `false`
+      }
+    },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-google-analytics`,

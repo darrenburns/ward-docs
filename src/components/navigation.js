@@ -27,7 +27,7 @@ export const NavigationSectionHeader = ({children}) => (
 )
 
 const NavigationContainer = tw.div`
-  w-64 p-8 pr-0
+  w-64 p-8 pr-0 pt-0
 `
 export default function Navigation({children}) {
   return (

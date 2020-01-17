@@ -28,6 +28,10 @@ const SiteTitleAndDescription = tw.div`
   flex-col ml-2
 `
 
+const SearchWrapper = tw.div`
+  m-4
+`
+
 const Sidebar = ({children}) => {
   const data = useStaticQuery(graphql`
     query {
@@ -60,6 +64,9 @@ const Sidebar = ({children}) => {
             </SiteDescription>
           </SiteTitleAndDescription>
         </SiteHeader>
+        <SearchWrapper>
+          <input id="doc-search" type="search" placeholder="Search..."/>
+        </SearchWrapper>
         {children}
         <Footer/>
       </Navbar>

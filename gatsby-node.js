@@ -21,18 +21,6 @@ exports.createPages = async ({graphql, actions, reporter}) => {
             }
           }
         }
-        apiDocs: allMarkdownRemark(filter: {frontmatter: {type: {eq: "apidocs"}}}) {
-          edges {
-            node {
-              html
-              frontmatter {
-                path
-                title
-                section
-              }
-            }
-          }
-        }
       }`)
   if (result.errors) {
     reporter.panicOnBuild("Error while fetching pages.")
@@ -41,10 +29,6 @@ exports.createPages = async ({graphql, actions, reporter}) => {
 
   result.data.userGuide.edges.forEach(({node}) => {
     console.log("User guide path: ", node.frontmatter.path)
-  })
-
-  result.data.apiDocs.edges.forEach(({node}) => {
-    console.log("API docs path: ", node.frontmatter.path)
   })
 
   // Create pages for the MDX files
@@ -58,17 +42,5 @@ exports.createPages = async ({graphql, actions, reporter}) => {
             })
           }
       )
-
-
-  // Create pages for each of the Markdown files
-  const pageTemplate = path.resolve(`src/templates/doc-page-template.js`)
-  result.data.apiDocs.edges
-      .forEach(({node}) => {
-        const path = node.frontmatter.path
-        createPage({
-          path: path,
-          component: pageTemplate,
-        })
-      })
 
 }

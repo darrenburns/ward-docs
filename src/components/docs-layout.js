@@ -15,18 +15,6 @@ const NavigationSectionPages = tw.div`mb-4`
 const DocsLayout = ({children}) => {
   const data = useStaticQuery(graphql`
     query {
-      apiDocs: allMarkdownRemark(filter: {frontmatter: {type: {eq: "apidocs"}}}) {
-        edges {
-          node {
-            id
-            frontmatter {
-              title
-              path
-              section
-            }
-          }
-        }
-      }
       userGuide: allMdx(filter: {frontmatter: {section: {eq: "user guide"}}}) {
           edges {
             node {
@@ -43,11 +31,8 @@ const DocsLayout = ({children}) => {
   `)
 
   const userGuidePages = data.userGuide.edges.map(edge => edge.node)
-  const apiDocsPages = data.apiDocs.edges.map(edge => edge.node)
 
-  const allDocPages = userGuidePages.concat(apiDocsPages)
-
-  const sections = allDocPages.reduce((accumulated, page) => {
+  const sections = userGuidePages.reduce((accumulated, page) => {
     const key = page.frontmatter.section || "user guide"
     const current = accumulated[key]
     if (!current) {
