@@ -1,7 +1,7 @@
 import tw from "tailwind.macro"
 import {css} from "@emotion/core"
 import {graphql, Link, useStaticQuery} from "gatsby"
-import React from "react"
+import React, {useEffect} from "react"
 import Footer from "./footer"
 
 const Navbar = tw.header`
@@ -33,6 +33,15 @@ const SearchWrapper = tw.div`
 `
 
 const Sidebar = ({children}) => {
+
+  useEffect(() => {
+    window.docsearch({
+      apiKey: "6566bf9cc0d24e52dd892df1208f9c1b",
+      indexName: "wardpy",
+      inputSelector: "#doc-search",
+    })
+  }, [])
+
   const data = useStaticQuery(graphql`
     query {
       site {
