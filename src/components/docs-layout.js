@@ -23,6 +23,7 @@ const DocsLayout = ({children}) => {
                 path
                 title
                 section
+                sortKey
               }
             }
           }
@@ -44,7 +45,8 @@ const DocsLayout = ({children}) => {
   }, {})
 
   const sectionsDom = Object.keys(sections).map(sectionName => {
-    const pagesInSection = sections[sectionName].map(page => (
+    let pagesInSection = sections[sectionName].sort((a, b) => a.frontmatter.sortKey - b.frontmatter.sortKey)
+    pagesInSection = pagesInSection.map(page => (
         <Location key={page.id}>
           {({location}) => {
             const isActive = location.pathname === `${page.frontmatter.path}/`
@@ -57,11 +59,6 @@ const DocsLayout = ({children}) => {
         </Location>
     ))
 
-    // Sort the pages in the section based on the sortKey in their frontmatter
-    const orderedPagesInSection = {}
-    Object.keys(pagesInSection).sort().forEach(function (key) {
-      orderedPagesInSection[key] = pagesInSection[key]
-    })
 
     return (
         <NavigationSection key={sectionName}>
