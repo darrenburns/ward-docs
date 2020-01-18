@@ -115,9 +115,9 @@ const IndexPage = () => {
       <DocsLayout>
         <SEO title="Ward"/>
         <IndexContentWrapper>
-          <GiantLogo css={{fontSize: 82}}>W</GiantLogo>
+          <GiantLogo css={{fontSize: 82}}>Ward</GiantLogo>
           <IndexTextIntro>
-            Ward is a testing framework for Python 3.6 and beyond.
+            A testing framework for Python 3.6 and beyond.
           </IndexTextIntro>
 
           <IndexSectionHeading>
