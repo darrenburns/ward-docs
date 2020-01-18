@@ -25,7 +25,6 @@ const DocsLayout = ({children}) => {
                 title
                 section
                 sortKey
-                tag
               }
             }
           }
