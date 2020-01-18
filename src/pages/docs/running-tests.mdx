@@ -32,6 +32,16 @@ ward --path <Blue>"tests"</Blue>
 To run tests in the current directory, you can just type `ward`, which
 is functionally equivalent to `ward --path .`
 
+You can supply multiple test directories by providing multiple `--path` options: 
+
+<TerminalCommand>
+ward --path <Blue>"unit"</Blue> --path <Blue>"integration"</Blue>
+</TerminalCommand>
+
+Ward will run all tests it finds across all given directories.
+If one of the specified directories is contained within another, it won't 
+repeat the same test more than once.
+
 ## Customising the output with `--test-output-style`
 
 <TerminalCommand>ward --test-output-style [<Blue>test-per-line</Blue>|<Blue>dots-module</Blue>|<Blue>dots-global</Blue>]</TerminalCommand>
