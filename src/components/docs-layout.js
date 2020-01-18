@@ -15,7 +15,7 @@ const NavigationSectionPages = tw.div`mb-4`
 const DocsLayout = ({children}) => {
   const data = useStaticQuery(graphql`
     query {
-      userGuide: allMdx(filter: {frontmatter: {section: {eq: "user guide"}}}) {
+      mdxPages: allMdx {
           edges {
             node {
               id
@@ -30,9 +30,9 @@ const DocsLayout = ({children}) => {
     }
   `)
 
-  const userGuidePages = data.userGuide.edges.map(edge => edge.node)
+  const mdxPages = data.mdxPages.edges.map(edge => edge.node)
 
-  const sections = userGuidePages.reduce((accumulated, page) => {
+  const sections = mdxPages.reduce((accumulated, page) => {
     const key = page.frontmatter.section || "user guide"
     const current = accumulated[key]
     if (!current) {

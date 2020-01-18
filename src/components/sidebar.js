@@ -6,7 +6,7 @@ import Footer from "./footer"
 import githubLogo from "../images/gh-logo.svg"
 
 const Navbar = tw.header`
-  p-0 m-0 border-solid border-green-700 border-0 border-r-2
+  p-0 m-0 border-solid border-green-700 border-0 border-r-2 bg-gray-900
 `
 
 const SiteLogo = tw.h1`
@@ -18,11 +18,11 @@ const SiteTitle = tw.div`
 `
 
 const SiteHeader = tw.div`
-  mt-4 ml-4 flex
+  pt-4 pl-4 flex bg-gray-900
 `
 
 const SiteDescription = tw.div`
-  text-xs font-mono text-gray-600
+  text-xs font-mono
 `
 
 const SiteTitleAndDescription = tw.div`
@@ -30,15 +30,15 @@ const SiteTitleAndDescription = tw.div`
 `
 
 const SearchWrapper = tw.div`
-  m-4 mb-8
+  m-4 mr-0
 `
 
 const GitHubWrapper = tw.div`
-  p-4 pb-0 flex
+  p-4 pb-0 pl-6 flex bg-gray-900
 `
 
 const GitHubInfo = tw.div`
-  text-xs pl-2 flex-column
+  text-xs pl-2 flex-column text-gray-500
 `
 
 const GitHubStarsAndForks = tw.div`
@@ -69,7 +69,7 @@ const Sidebar = ({children}) => {
   const siteTitle = data.site.siteMetadata.title
   const latestVersion = data.site.siteMetadata.latestVersion
   const githubVersionUrl = data.site.siteMetadata.githubVersionUrl
-  return (<Navbar css={css`background-color: #272a36;`}>
+  return (<Navbar>
         <SiteHeader>
           <Link
               to="/"

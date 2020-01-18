@@ -9,7 +9,7 @@ exports.createPages = async ({graphql, actions, reporter}) => {
   const {createPage} = actions
   const result = await graphql(`
       query {
-        userGuide: allMdx(filter: {frontmatter: {section: {eq: "user guide"}}}) {
+        mdxPages: allMdx {
           edges {
             node {
               body
@@ -27,13 +27,13 @@ exports.createPages = async ({graphql, actions, reporter}) => {
     return
   }
 
-  result.data.userGuide.edges.forEach(({node}) => {
+  result.data.mdxPages.edges.forEach(({node}) => {
     console.log("User guide path: ", node.frontmatter.path)
   })
 
   // Create pages for the MDX files
   const mdxPageTemplate = path.resolve(`src/templates/mdx-doc-page-template.js`)
-  result.data.userGuide.edges
+  result.data.mdxPages.edges
       .forEach(({node}) => {
             const path = node.frontmatter.path
             createPage({
