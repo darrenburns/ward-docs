@@ -1,0 +1,75 @@
+---
+title: "Test a REST API with httpx"
+path: "/guide/testing-rest-api"
+section: "tutorials"
+sortKey: 2
+---
+import {TerminalCommand, TerminalExample, TestOutputLine, PassMarker, Blue} from "../../components/ward-test-output"
+
+This tutorial will explain how you can test a JSON REST API using Ward and [httpx](https://github.com/encode/httpx), a modern
+HTTP client library similar to requests. The API could be written in any language, but rather than implementing our own,
+we'll use [JSONPlaceholder](https://jsonplaceholder.typicode.com/). JSONPlaceholder is a mock API that contains some example endpoints
+that can be used for testing. 
+
+Let's begin by installing Ward and httpx:
+
+<TerminalCommand>
+pip install ward httpx
+</TerminalCommand>
+
+## Testing GET requests
+
+Let's write a test to check that the endpoint `https://jsonplaceholder.typicode.com/todos/1` returns the todo with the correct ID (1).
+
+```python
+import httpx
+from ward import test, expect
+
+BASE_URL = "https://jsonplaceholder.typicode.com/"
+
+@test("/todos/1 returns todo with id 1")
+def _():
+    # Send the GET request
+    response = httpx.get(f"{BASE_URL}todos/1")
+    
+    # Get the ID from the response
+    todo_id = response.json()["id"]
+    
+    # Check that the ID is 1
+    expect(todo_id).equals(1)
+    
+    # Raise an exception to fail the test if
+    # the status code is not a successful one
+    response.raise_for_status()
+```
+
+Now we can run our test by running `ward` from the command line:
+
+<TerminalCommand>
+ward
+</TerminalCommand>
+
+The test passes! We've confirmed that JSONPlaceholder returns the 
+correct todo:
+
+<TerminalExample>
+    <TestOutputLine marker="PASS" lineNumber="6" moduleName="test_rest" description="/todos/1 returns todo with id 1" />
+</TerminalExample>
+
+Now we'll check that passing a non-existent ID (`"invalid"`) to the endpoint results in a 404:
+
+```python
+@test("/todos/invalid returns a 404")
+def _():
+    response = httpx.get(f"{BASE_URL}todos/invalid")
+    code = response.status_code
+    expect(code).equals(httpx.codes.NOT_FOUND)
+```  
+
+Running our tests again, we see that JSONPlaceholder does indeed return a 404 when we pass a non-existent ID:
+
+<TerminalExample>
+    <TestOutputLine marker="PASS" lineNumber="6" moduleName="test_rest" description="/todos/1 returns todo with id 1" />
+    <TestOutputLine marker="PASS" lineNumber="15" moduleName="test_rest" description="/todos/invalid returns a 404" />
+</TerminalExample>
+

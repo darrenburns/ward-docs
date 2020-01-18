@@ -11,6 +11,7 @@ import {Location} from "@reach/router"
 
 const NavigationSection = tw.div``
 const NavigationSectionPages = tw.div`mb-4`
+const NavigationTag = tw.span`p-1 text-xs bg-blue-600 text-gray-300 rounded`
 
 const DocsLayout = ({children}) => {
   const data = useStaticQuery(graphql`
@@ -24,6 +25,7 @@ const DocsLayout = ({children}) => {
                 title
                 section
                 sortKey
+                tag
               }
             }
           }
@@ -46,74 +48,78 @@ const DocsLayout = ({children}) => {
 
   const sectionsDom = Object.keys(sections).map(sectionName => {
     let pagesInSection = sections[sectionName].sort((a, b) => a.frontmatter.sortKey - b.frontmatter.sortKey)
-    pagesInSection = pagesInSection.map(page => (
-        <Location key={page.id}>
-          {({location}) => {
-            const isActive = location.pathname === `${page.frontmatter.path}/`
-                || location.pathname === page.frontmatter.path
-            return (<NavigationLink key={page.id} to={page.frontmatter.path} isActive={isActive}>
-                  {page.frontmatter.title}
-                </NavigationLink>
-            )
-          }}
-        </Location>
-    ))
-
-
-    return (
-        <NavigationSection key={sectionName}>
-          <NavigationSectionHeader>
-            {sectionName}
-          </NavigationSectionHeader>
-          <NavigationSectionPages>
-            {pagesInSection}
-          </NavigationSectionPages>
-        </NavigationSection>
-    )
+    pagesInSection = pagesInSection.map(page => {
+      let tag = page.frontmatter.tag ? <NavigationTag>{page.frontmatter.tag}</NavigationTag> : ""
+      return (
+          <Location key={page.id}>
+            {({location}) => {
+              const isActive = location.pathname === `${page.frontmatter.path}/`
+                  || location.pathname === page.frontmatter.path
+              return (<NavigationLink key={page.id} to={page.frontmatter.path} isActive={isActive}>
+                    {page.frontmatter.title} {tag}
+                  </NavigationLink>
+              )
+            }}
+          </Location>
+      )
   })
 
-  sectionsDom.push(
-      <NavigationSection key="useful links">
+
+  return (
+      <NavigationSection key={sectionName}>
         <NavigationSectionHeader>
-          Useful Links
+          {sectionName}
         </NavigationSectionHeader>
         <NavigationSectionPages>
-          <a key="ward on pypi" href="https://pypi.org/project/ward">
-            <NavigationLinkWrapper>
-              Ward on PyPI
-            </NavigationLinkWrapper>
-          </a>
-          <a key="ward on github" href="https://github.com/darrenburns/ward">
-            <NavigationLinkWrapper>
-              Ward on GitHub
-            </NavigationLinkWrapper>
-          </a>
-          <a key="issue tracker" href="https://github.com/darrenburns/ward/issues">
-            <NavigationLinkWrapper>
-              Issues and ideas
-            </NavigationLinkWrapper>
-          </a>
-          <a key="changelog" href="https://github.com/darrenburns/ward/releases">
-            <NavigationLinkWrapper>
-              Changelog
-            </NavigationLinkWrapper>
-          </a>
+          {pagesInSection}
         </NavigationSectionPages>
       </NavigationSection>
   )
+}
+)
 
-  return (
-      <div style={{...tw`flex text-gray-400`}}>
-        <Sidebar>
-          <Navigation>
-            {sectionsDom}
-          </Navigation>
-        </Sidebar>
-        <MainContent>
-          {children}
-        </MainContent>
-      </div>
-  )
+sectionsDom.push(
+    <NavigationSection key="useful links">
+      <NavigationSectionHeader>
+        Useful Links
+      </NavigationSectionHeader>
+      <NavigationSectionPages>
+        <a key="ward on pypi" href="https://pypi.org/project/ward">
+          <NavigationLinkWrapper>
+            Ward on PyPI
+          </NavigationLinkWrapper>
+        </a>
+        <a key="ward on github" href="https://github.com/darrenburns/ward">
+          <NavigationLinkWrapper>
+            Ward on GitHub
+          </NavigationLinkWrapper>
+        </a>
+        <a key="issue tracker" href="https://github.com/darrenburns/ward/issues">
+          <NavigationLinkWrapper>
+            Issues and ideas
+          </NavigationLinkWrapper>
+        </a>
+        <a key="changelog" href="https://github.com/darrenburns/ward/releases">
+          <NavigationLinkWrapper>
+            Changelog
+          </NavigationLinkWrapper>
+        </a>
+      </NavigationSectionPages>
+    </NavigationSection>
+)
+
+return (
+    <div style={{...tw`flex text-gray-400`}}>
+      <Sidebar>
+        <Navigation>
+          {sectionsDom}
+        </Navigation>
+      </Sidebar>
+      <MainContent>
+        {children}
+      </MainContent>
+    </div>
+)
 }
 
 DocsLayout.propTypes = {
