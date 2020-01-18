@@ -11,7 +11,7 @@ import {Location} from "@reach/router"
 
 const NavigationSection = tw.div``
 const NavigationSectionPages = tw.div`mb-4`
-const NavigationTag = tw.span`p-1 text-xs bg-blue-600 text-gray-300 rounded`
+const NavigationTag = tw.span`ml-1 p-1 text-xs bg-orange-800 text-orange-300 font-semibold rounded`
 
 const DocsLayout = ({children}) => {
   const data = useStaticQuery(graphql`
@@ -25,6 +25,7 @@ const DocsLayout = ({children}) => {
                 title
                 section
                 sortKey
+                tag
               }
             }
           }
