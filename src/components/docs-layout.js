@@ -93,6 +93,11 @@ sectionsDom.push(
             Ward on GitHub
           </NavigationLinkWrapper>
         </a>
+        <a key="ward-docs on github" href="https://github.com/darrenburns/ward-docs/tree/master/src/pages/docs">
+          <NavigationLinkWrapper>
+            Help improve these docs!
+          </NavigationLinkWrapper>
+        </a>
         <a key="issue tracker" href="https://github.com/darrenburns/ward/issues">
           <NavigationLinkWrapper>
             Issues and ideas
