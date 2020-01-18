@@ -55,20 +55,34 @@ const Sidebar = ({children}) => {
     })
   }, [])
 
-  const data = useStaticQuery(graphql`
-    query {
-      site {
+  const sidebarData = useStaticQuery(graphql`
+    query SidebarData {
+      site: site {
         siteMetadata {
           title
           latestVersion
           githubVersionUrl
         }
       }
+      github: allGithubRepository {
+        edges {
+          node {
+            forkCount
+            stargazers {
+              totalCount
+            }
+            url
+          }
+        }
+      }
     }
   `)
-  const siteTitle = data.site.siteMetadata.title
-  const latestVersion = data.site.siteMetadata.latestVersion
-  const githubVersionUrl = data.site.siteMetadata.githubVersionUrl
+
+  const siteTitle = sidebarData.site.siteMetadata.title
+  const latestVersion = sidebarData.site.siteMetadata.latestVersion
+  const githubVersionUrl = sidebarData.site.siteMetadata.githubVersionUrl
+  const githubData = sidebarData.github.edges[0].node
+
   return (<Navbar>
         <SiteHeader>
           <Link
@@ -93,7 +107,7 @@ const Sidebar = ({children}) => {
               <a href="https://github.com/darrenburns/ward">darrenburns/ward</a>
             </div>
             <GitHubStarsAndForks>
-              60 stars, 5 forks
+              {githubData.stargazers.totalCount} stars, {githubData.forkCount} forks
             </GitHubStarsAndForks>
           </GitHubInfo>
         </GitHubWrapper>

@@ -100,6 +100,25 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: 'gatsby-source-github',
+      options: {
+        headers: {
+          Authorization: `Bearer ${process.env.GITHUB_WARD_ACCESS_TOKEN}` || "",
+        },
+        queries: [
+          `{
+            repository(name: "ward", owner: "darrenburns") { 
+              url
+              forkCount
+              stargazers {
+                totalCount
+              }
+            }
+          }`,
+        ],
+      },
+    },
     `gatsby-plugin-catch-links`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
