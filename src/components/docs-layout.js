@@ -5,7 +5,7 @@ import "./layout.css"
 
 import Sidebar from "./sidebar"
 import tw from "tailwind.macro"
-import Navigation, {NavigationLink, NavigationSectionHeader} from "./navigation"
+import Navigation, {NavigationLink, NavigationLinkWrapper, NavigationSectionHeader} from "./navigation"
 import {MainContent} from "./layout"
 import {Location} from "@reach/router"
 
@@ -71,6 +71,36 @@ const DocsLayout = ({children}) => {
         </NavigationSection>
     )
   })
+
+  sectionsDom.push(
+      <NavigationSection key="useful links">
+        <NavigationSectionHeader>
+          Useful Links
+        </NavigationSectionHeader>
+        <NavigationSectionPages>
+          <a key="ward on pypi" href="https://pypi.org/project/ward">
+            <NavigationLinkWrapper>
+              Ward on PyPI
+            </NavigationLinkWrapper>
+          </a>
+          <a key="ward on github" href="https://github.com/darrenburns/ward">
+            <NavigationLinkWrapper>
+              Ward on GitHub
+            </NavigationLinkWrapper>
+          </a>
+          <a key="issue tracker" href="https://github.com/darrenburns/ward/issues">
+            <NavigationLinkWrapper>
+              Issues and ideas
+            </NavigationLinkWrapper>
+          </a>
+          <a key="changelog" href="https://github.com/darrenburns/ward/releases">
+            <NavigationLinkWrapper>
+              Changelog
+            </NavigationLinkWrapper>
+          </a>
+        </NavigationSectionPages>
+      </NavigationSection>
+  )
 
   return (
       <div style={{...tw`flex text-gray-400`}}>

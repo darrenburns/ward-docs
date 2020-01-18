@@ -2,7 +2,7 @@ import React from "react"
 import tw from "tailwind.macro"
 
 const FooterWrapper = tw.footer`
-  text-sm p-8
+  text-xs p-6 text-gray-500
 `
 
 
