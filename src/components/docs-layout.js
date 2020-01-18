@@ -56,6 +56,13 @@ const DocsLayout = ({children}) => {
           }}
         </Location>
     ))
+
+    // Sort the pages in the section based on the sortKey in their frontmatter
+    const orderedPagesInSection = {}
+    Object.keys(pagesInSection).sort().forEach(function (key) {
+      orderedPagesInSection[key] = pagesInSection[key]
+    })
+
     return (
         <NavigationSection key={sectionName}>
           <NavigationSectionHeader>
