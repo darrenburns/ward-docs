@@ -3,6 +3,7 @@ import {css} from "@emotion/core"
 import {graphql, Link, useStaticQuery} from "gatsby"
 import React, {useEffect} from "react"
 import Footer from "./footer"
+import githubLogo from "../images/gh-logo.svg"
 
 const Navbar = tw.header`
   p-0 m-0 border-solid border-green-700 border-0 border-r-2
@@ -17,7 +18,7 @@ const SiteTitle = tw.div`
 `
 
 const SiteHeader = tw.div`
-  mt-8 ml-8 flex
+  mt-4 ml-4 flex
 `
 
 const SiteDescription = tw.div`
@@ -29,7 +30,19 @@ const SiteTitleAndDescription = tw.div`
 `
 
 const SearchWrapper = tw.div`
-  m-4
+  m-4 mb-8
+`
+
+const GitHubWrapper = tw.div`
+  p-4 pb-0 flex
+`
+
+const GitHubInfo = tw.div`
+  text-xs pl-2 flex-column
+`
+
+const GitHubStarsAndForks = tw.div`
+  text-xs
 `
 
 const Sidebar = ({children}) => {
@@ -73,8 +86,19 @@ const Sidebar = ({children}) => {
             </SiteDescription>
           </SiteTitleAndDescription>
         </SiteHeader>
+        <GitHubWrapper>
+          <img style={tw`mt-1 mb-0`} height="30px" width="30px" src={githubLogo} alt="GitHub logo"/>
+          <GitHubInfo>
+            <div>
+              <a href="https://github.com/darrenburns/ward">darrenburns/ward</a>
+            </div>
+            <GitHubStarsAndForks>
+              60 stars, 5 forks
+            </GitHubStarsAndForks>
+          </GitHubInfo>
+        </GitHubWrapper>
         <SearchWrapper>
-          <input id="doc-search" type="search" placeholder="Search..."/>
+          <input id="doc-search" type="search" placeholder="Search docs..."/>
         </SearchWrapper>
         {children}
         <Footer/>
