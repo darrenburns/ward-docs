@@ -95,6 +95,7 @@ module.exports = {
               aliases: {},
               showLineNumbers: false,
               noInlineHighlight: false,
+
             },
           },
         ],

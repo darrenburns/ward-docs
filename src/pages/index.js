@@ -62,7 +62,7 @@ const TextEditor = tw.div`
   rounded bg-black
 `
 const TextEditorTab = tw.div`
-  text-green-600 font-semibold bg-gray-900 rounded-t-lg w-3/5 p-2 text-center
+  text-green-600 font-semibold bg-gray-900 rounded-t w-3/5 p-2 text-center
 `
 
 const TextEditorBody = tw.div`
