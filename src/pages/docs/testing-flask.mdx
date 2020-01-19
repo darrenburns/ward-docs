@@ -4,7 +4,7 @@ path: "/guide/testing-flask"
 section: "tutorials"
 sortKey: 1
 ---
-import {TerminalCommand, Blue} from "../../components/ward-test-output"
+import {TerminalCommand, PassMarker, FailMarker, Blue} from "../../components/ward-test-output"
 
 Let's write a couple of tests using Ward for the following Flask application (`users.py`).
 
@@ -74,7 +74,7 @@ We can run our test by running `ward` in our terminal:
 
 ![the test passes](../../images/ward_flask_1.png)
 
-Great, our test passed! The fully green bar indicates a 100% success rate!
+Success! It's a <PassMarker>PASS</PassMarker>! The fully green bar indicates a 100% success rate!
 
 **<Blue>TIP:</Blue>** If we had lots of other, unrelated endpoints in our API and we only wanted
 to run the tests that affect the `/users/` endpoint, we could do so using the following command.
@@ -93,7 +93,7 @@ def _(client=test_client):
     expect(res.data).equals("The user is alice")
 ```
 
-Running our tests again, we see that our new test fails!
+Running our tests again, we see that our new test <FailMarker>FAILS</FailMarker>!
 
 ![one test passes and the other test fails](../../images/ward_flask_2.png)
 
@@ -112,7 +112,7 @@ def _(client=test_client):
     expect(res.data).equals(b"The user is alice")
 ```
 
-If we run our tests again, we see that they both pass!
+If we run our tests again, we see that they both <PassMarker>PASS</PassMarker>!
 
 ![both tests pass](../../images/ward_flask_3.png)
 
