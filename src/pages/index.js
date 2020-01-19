@@ -4,7 +4,6 @@ import {graphql, useStaticQuery} from "gatsby"
 import DocsLayout from "../components/docs-layout"
 import tw from "tailwind.macro"
 import {
-  TestOutputLine,
   Flex,
   Green,
   GreenHighlight,
@@ -15,6 +14,7 @@ import {
   RedHighlight,
   TerminalExample,
   TerminalText,
+  TestOutputLine,
 } from "../components/ward-test-output"
 import {Link} from "@reach/router"
 
@@ -160,7 +160,8 @@ const IndexPage = () => {
             Modular test dependencies
           </IndexSectionHeading>
           <IndexSectionIntroText>
-            Manage test setup and teardown using <Link to="/guide/fixtures">fixtures</Link> cached to suit your needs.
+            Manage test setup and teardown using <Link to="/guide/fixtures">fixtures</Link> that rely on Python's import
+            system, not name matching.
           </IndexSectionIntroText>
           <IndexTextExample>
             <FixturesExample>
@@ -184,7 +185,6 @@ const IndexPage = () => {
               </TextEditor>
             </FixturesExample>
           </IndexTextExample>
-
 
           <IndexSectionHeading>
             Expressive parameterised testing
@@ -230,16 +230,26 @@ const IndexPage = () => {
                 <TerminalText css={tw`mt-2`}>Loose querying of test code for quick development.</TerminalText>
               </FeaturePane>
             </FeaturePaneList>
+            <FeaturePaneList>
+              <FeaturePane>
+                <PassMarker css={tw`font-semibold px-2`}>LOW OVERHEAD</PassMarker>
+                <TerminalText css={tw`mt-2`}>Roughly half the framework overhead of Pytest.</TerminalText>
+              </FeaturePane>
+              <FeaturePane>
+                <PassMarker css={tw`font-semibold px-2`}>WORKS WITH HYPOTHESIS</PassMarker>
+                <TerminalText css={tw`mt-2`}>Works with Hypothesis out of the box, with deeper support planned.</TerminalText>
+              </FeaturePane>
+            </FeaturePaneList>
           </IndexTextExample>
 
           {examplesFromMarkdown}
 
           <IndexSectionHeading>
-            Interested?
+            Interested in helping push Ward forward?
           </IndexSectionHeading>
           <IndexTextExample>
             <IndexSectionIntroText>
-              Ward is currently in development on <a href="https://github.com/darrenburns/ward">GitHub</a>. <br/>
+              Ward is currently in development on <a href="https://github.com/darrenburns/ward">GitHub</a>. Contributions of any kind are welcomed!<br/>
             </IndexSectionIntroText>
             <IndexSectionIntroText>
               It's available on <a href="https://pypi.org/project/ward/">PyPI</a>, and can be installed using pip:
