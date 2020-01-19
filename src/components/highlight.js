@@ -1,6 +1,6 @@
 import React from 'react'
 import Highlight, {defaultProps} from 'prism-react-renderer'
-import theme from 'prism-react-renderer/themes/palenight'
+import theme from 'prism-react-renderer/themes/nightOwl'
 
 
 export default ({children, className}) => {
@@ -28,7 +28,7 @@ export default ({children, className}) => {
 
 
   const prismRenderer = ({className, style, tokens, getLineProps, getTokenProps}) => (
-      <pre className={className} style={{...style, padding: `20px`}}>
+      <pre className={className} style={{...style, padding: `16px`}}>
           {lines(tokens, getLineProps, getTokenProps)}
       </pre>
   )
