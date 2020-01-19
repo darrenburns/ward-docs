@@ -129,8 +129,12 @@ const IndexPage = () => {
           </IndexSectionIntroText>
           <IndexTextExample>
             <TerminalExample>
-              <TestOutputLine lineNumber="17" marker="PASS" moduleName="test_util"
+              <TestOutputLine lineNumber="7" marker="PASS" moduleName="test_util"
                               description="palindrome('noon') is True"/>
+              <TestOutputLine lineNumber="12" marker="FAIL" moduleName="test_users"
+                              description="get_user(id=1) returns user 1"/>
+              <TestOutputLine lineNumber="19" marker="SKIP" moduleName="test_todos"
+                              description="mark_done(todo_id=3) returns todo 3" note="[WIP]"/>
             </TerminalExample>
           </IndexTextExample>
 
