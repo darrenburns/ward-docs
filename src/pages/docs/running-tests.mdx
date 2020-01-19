@@ -146,6 +146,17 @@ or regular expression matching.
 
 (TODO)
 
+## Randomise test execution order
+
+<TerminalCommand>
+ward --order <Blue>"random"</Blue>
+</TerminalCommand>
+
+Running tests in a random order can help identify tests
+that have hidden dependencies on each other. Tests should
+pass regardless of the order they run in, and they should 
+pass if run in isolation.
+
 ## Cancelling after a number of failures with `--fail-limit`
 
 <TerminalCommand>
