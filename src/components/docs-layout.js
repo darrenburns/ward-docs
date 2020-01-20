@@ -9,7 +9,6 @@ import Navigation, {NavigationLink, NavigationLinkWrapper, NavigationSectionHead
 import {MainContent} from "./layout"
 import {Location} from "@reach/router"
 import githubLogo from "../images/gh-logo.svg"
-import {Green, TerminalText} from "./ward-test-output"
 
 const NavigationSection = tw.div``
 const NavigationSectionPages = tw.div`mb-4`

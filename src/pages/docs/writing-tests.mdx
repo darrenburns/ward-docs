@@ -10,39 +10,40 @@ import {CommitExample} from  "../../components/docs-layout"
 
 ## Descriptive testing
 
-Test frameworks usually require that you describe how your tests work using
-a function name. As a result test names are often short and non-descriptive,
-or long and unreadable.
+When reading a test, it's important to understand its *purpose*.
+Therefore, a test framework should make expressing that purpose in a clear and concise manner as simple as possible.
 
-Ward lets you describe your tests using strings, meaning you can be as descriptive
+Ward lets you describe your tests using strings, allowing you to be as descriptive
 as you'd like:
 
 ```python
 from ward import expect, fixture, test
 
-@fixture
-def name():
-    return "Win Butler"
-
-@test("my_sum({a}, {b}) is equal to {result}")
-def _(a=1, b=2, result=3):
-    total = my_sum(a, b)
-    expect(total).equals(result)
-    
-@test("first_char('{name}') returns '{name[0]}'")
-def _(name=name):
-    first_char = first_char(name)
-    expect(first_char).equals(name[0])
+@test("1 + 2 equals 3")
+def _():
+    expect(1 + 2).equals(3)
 ```
 
 The description of a test is a [format string](https://docs.python.org/3/library/string.html#format-string-syntax), and may
-refer to any of the parameters present in the test signature. 
+refer to any of the parameters (variables or fixtures) present in the test signature. This
+makes it easy to keep your test data and test descriptions in sync.
+
+
+```python
+@fixture
+def three():
+    yield 3
+
+@test("my_sum({a}, {b}) is equal to {result}")
+def _(a=1, b=2, result=three):
+    total = my_sum(a, b)
+    expect(total).equals(result)
+```
 
 During the test run, Ward will print the descriptive test name to the console:
 
 <TerminalExample>
-    <TestOutputLine marker="FAIL" lineNumber="7" moduleName="test_things" description="my_sum(1, 2) is equal to 3" />
-    <TestOutputLine marker="PASS" lineNumber="12" moduleName="test_things" description="first_char('Win Butler') returns 'W'" />
+    <TestOutputLine marker="FAIL" lineNumber="7" moduleName="test_my_math_module" description="my_sum(1, 2) is equal to 3" />
 </TerminalExample>
 
 ## The `expect` API
@@ -164,13 +165,19 @@ you'd have to increase its scope to `module` or `global`.
 
 Currently, `each` can only be used in the signature of *tests*.
 
-### Real-world parameterisation examples
+### Real-world examples
+
+<CommitExample hash={"f85777bfaf83834381450a9ed686d777a5d05bab"} 
+  url={"https://github.com/darrenburns/ward/blob/f85777bfaf83834381450a9ed686d777a5d05bab/tests/test_collect.py#L48"}
+  title={"Format strings & parameterisation"} 
+  repo={"darrenburns/ward"}
+  description={"You can use format strings in your parameterised tests to give each run its own unique description."} />
 
 <CommitExample hash={"f85777bfaf83834381450a9ed686d777a5d05bab"} 
   url={"https://github.com/darrenburns/ward/commit/f85777bfaf83834381450a9ed686d777a5d05bab"}
   title={"Combining tests"} 
   repo={"darrenburns/ward"}
-  description={"A refactoring of two similar tests into a single parameterised test."} />
+  description={"A diff showing the refactoring of two similar tests into a single parameterised test."} />
 
 <CommitExample hash={"7f43adcd2288fb1e8d97d3867e61fb7ef1d6ad7e"}
   url={"https://github.com/darrenburns/ward/commit/7f43adcd2288fb1e8d97d3867e61fb7ef1d6ad7e"}
@@ -196,6 +203,16 @@ def _():
     expect(mock).called_once_with(1, 2, x=3)
 ```
 
+### Real-world examples
+
+<CommitExample hash={"8c3eaef2a7a133e1ef7d379eb5e003701e035356"}
+  url={"https://github.com/darrenburns/ward/blob/8c3eaef2a7a133e1ef7d379eb5e003701e035356/tests/test_testing.py#L75"}
+  title={"Ensure Test.__call__ delegates correctly"} 
+  repo={"darrenburns/ward"}
+  description={"Ward has an internal Test object that wraps test functions, and can be called directly. When called, \
+  it should pass its arguments directly through to the test function. This test replaces the test function with a mock, \
+  and ensures that the mock gets called with the same arguments as the Test object."} />
+
 ## Checking for exceptions
 
 The test below will pass, because a `ZeroDivisionError` is raised. If a `ZeroDivisionError` wasn't raised,
@@ -210,6 +227,13 @@ def _():
         1/0
 ```
 
+### Real-world examples
+
+<CommitExample hash={"f85777bfaf83834381450a9ed686d777a5d05bab"}
+  url={"https://github.com/darrenburns/ward/blob/f85777bfaf83834381450a9ed686d777a5d05bab/tests/test_expect.py#L37"}
+  title={"Checking an exception is raised"} 
+  repo={"darrenburns/ward"}
+  description={"This test checks that a call to 'expect.equals' raises an ExpectationFailed error if the arguments are not equal."} />
 
 ## Skipping a test
 
