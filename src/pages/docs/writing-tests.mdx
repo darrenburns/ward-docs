@@ -6,6 +6,7 @@ sortKey: 1
 ---
 import {TestOutputLine, TerminalExample, XpassMarker, XfailMarker, SkipMarker, TerminalText} from "../../components/ward-test-output"
 import Warning from "../../components/warning"
+import {CommitExample} from  "../../components/docs-layout"
 
 ## Descriptive testing
 
@@ -162,6 +163,21 @@ If you'd like to use the same `book_api` instance across each of the three gener
 you'd have to increase its scope to `module` or `global`.
 
 Currently, `each` can only be used in the signature of *tests*.
+
+### Real-world parameterisation examples
+
+<CommitExample hash={"f85777bfaf83834381450a9ed686d777a5d05bab"} 
+  url={"https://github.com/darrenburns/ward/commit/f85777bfaf83834381450a9ed686d777a5d05bab"}
+  title={"Combining tests"} 
+  repo={"darrenburns/ward"}
+  description={"A refactoring of two similar tests into a single parameterised test."} />
+
+<CommitExample hash={"7f43adcd2288fb1e8d97d3867e61fb7ef1d6ad7e"}
+  url={"https://github.com/darrenburns/ward/commit/7f43adcd2288fb1e8d97d3867e61fb7ef1d6ad7e"}
+  title={"Testing a mapping function with parameterise"} 
+  repo={"darrenburns/ward"}
+  description={"Ward maps the outcome of a test to a colour that will appear in your terminal. This test uses parameterisation to check that all of these outcomes map to the correct colour."} />
+
 
 ## Working with mocks
 
