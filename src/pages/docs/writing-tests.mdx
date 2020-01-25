@@ -10,18 +10,18 @@ import {CommitExample} from  "../../components/docs-layout"
 
 ## Descriptive testing
 
-When reading a test, it's important to understand its *purpose*.
-Therefore, a test framework should make expressing that purpose in a clear and concise manner as simple as possible.
+Tests aren't only a great way of ensuring your code behaves correctly, they're also a fantastic form of documentation.
+Therefore, a test framework should make describing your tests in a clear and concise manner as simple as possible.
 
 Ward lets you describe your tests using strings, allowing you to be as descriptive
 as you'd like:
 
 ```python
-from ward import expect, fixture, test
+from ward import fixture, test
 
-@test("1 + 2 equals 3")
+@test("1 + 2 == 3")
 def _():
-    expect(1 + 2).equals(3)
+    assert 1 + 2 == 3
 ```
 
 The description of a test is a [format string](https://docs.python.org/3/library/string.html#format-string-syntax), and may
@@ -34,44 +34,27 @@ makes it easy to keep your test data and test descriptions in sync.
 def three():
     yield 3
 
-@test("my_sum({a}, {b}) is equal to {result}")
+@test("{a} + {b} == {result}")
 def _(a=1, b=2, result=three):
-    total = my_sum(a, b)
-    expect(total).equals(result)
+    assert a + b == result
 ```
 
 During the test run, Ward will print the descriptive test name to the console:
 
 <TerminalExample>
-    <TestOutputLine marker="FAIL" lineNumber="7" moduleName="test_my_math_module" description="my_sum(1, 2) is equal to 3" />
+    <TestOutputLine marker="FAIL" lineNumber="7" moduleName="test_math" description="1 + 2 == 3" />
 </TerminalExample>
 
-## The `expect` API
+## Using `assert`
 
-<Warning>In an upcoming version you will be able to use standard `assert` statements
-and still get in-depth feedback when your tests fail.</Warning>
+Ward lets you use plain `assert` statements when writing your tests, but gives you considerably
+more information should the assertion fail than a typical `assert` statement. It does this by 
+modifying the abstract syntax tree (AST) of any collected tests. Occurrences of the `assert`
+statement are replaced with a function call.
 
-Use `expect` to perform tests on objects by chaining together methods. Using `expect` allows Ward
-to provide detailed, highly readable output when your tests fail.
-
-```python
-from ward import expect, fixture, test
-
-@fixture
-def cities():
-    return {"edinburgh": "scotland", "tokyo": "japan", "madrid": "spain"}
-
-@test("get_capitals_from_server should return the correct cities")
-def _(cities=cities):
-    found_cities = get_capitals_from_server()
-
-    (expect(found_cities)
-     .contains("tokyo")                                 # it contains the key 'tokyo'
-     .satisfies(lambda x: all(len(k) < 10 for k in x))  # all keys < 10 chars
-     .equals(cities))
-```
-
-Most methods on `expect` have inverted equivalents, e.g. `not_equals`, `not_satisfies`, etc.
+<Warning>As of `0.28.0b0`, assertion rewriting only applies to assertions of the form `assert x == y`, and to
+assertions that appear directly in your tests.</Warning>
+<br/>
 
 ## Parameterised testing
 
@@ -93,7 +76,7 @@ def _(
     a=each(1, 2, 3),
     b=each(2, 4, six),
 ):
-    expect(a * 2).equals(b)
+    assert a * 2 == b
 ```
 
 Although the example above is written as a single test,
@@ -127,7 +110,7 @@ def _(
    name=each("The Way of Kings", "Words of Radiance", "Oathbringer"),
 )
    book: Book = api.get_book(isbn)
-   expect(book.name).equals(name)
+   assert book.name == name
 ```
 
 Ward will expand the parameterised test above into 3 distinct tests.
@@ -142,7 +125,7 @@ def _(
    name="The Way of Kings",
 )
    book: Book = api.get_book(isbn)
-   expect(book.name).equals(name)
+   assert book.name == name
 
 @test("[2/3] BookApi.get_book returns the correct book given an ISBN")
 def _(
@@ -151,7 +134,7 @@ def _(
    name="Words of Radiance",
 )
    book: Book = api.get_book(isbn)
-   expect(book.name).equals(name)
+   assert book.name == name
 
 @test("[3/3] BookApi.get_book returns the correct book given an ISBN")
 def _(
@@ -160,7 +143,7 @@ def _(
    name="Oathbringer",
 )
    book: Book = api.get_book(isbn)
-   expect(book.name).equals(name)
+   assert book.name == name
 ```
 
 If you'd like to use the same `book_api` instance across each of the three generated tests, 
@@ -188,33 +171,6 @@ Currently, `each` can only be used in the signature of *tests*.
   repo={"darrenburns/ward"}
   description={"Ward maps the outcome of a test to a colour that will appear in your terminal. This test uses parameterisation to check that all of these outcomes map to the correct colour."} />
 
-
-## Working with mocks
-
-`expect` works well with `unittest.mock`, by providing methods such as `expect.called`, `expect.called_once_with`, 
-and more. If a test fails due to the mock not being used as expected, Ward will print specialised output to aid
-debugging the problem.
-
-```python
-from ward import test, expect
-from unittest.mock import Mock
-
-@test("the mock was called with the expected arguments")
-def _():
-    mock = Mock()
-    mock(1, 2, x=3)
-    expect(mock).called_once_with(1, 2, x=3)
-```
-
-### Real-world examples
-
-<CommitExample hash={"8c3eaef2a7a133e1ef7d379eb5e003701e035356"}
-  url={"https://github.com/darrenburns/ward/blob/8c3eaef2a7a133e1ef7d379eb5e003701e035356/tests/test_testing.py#L75"}
-  title={"Ensure Test.__call__ delegates correctly"} 
-  repo={"darrenburns/ward"}
-  description={"Ward has an internal Test object that wraps test functions, and can be called directly. When called, \
-  it should pass its arguments directly through to the test function. This test replaces the test function with a mock, \
-  and ensures that the mock gets called with the same arguments as the Test object."} />
 
 ## Checking for exceptions
 
@@ -246,7 +202,8 @@ Use the `@skip` decorator to tell Ward not to execute a test.
 from ward import skip
 
 @skip
-def test_to_be_skipped():
+@test("I will be skipped!")
+def _():
     # ...
 ```
 
@@ -296,15 +253,6 @@ be displayed as shown below.
 </TerminalExample>
 
 If an <XpassMarker>XPASS</XpassMarker> occurs during a run, that run will be considered a failure.
-
-## Testing for approximate equality
-
-Check that a value is close to another value.
-
-```python
-expect(1.0).approx(1.01, abs_tol=0.2)  # pass
-expect(1.0).approx(1.01, abs_tol=0.001)  # fail
-```
 
 ## Using Hypothesis with Ward
 
