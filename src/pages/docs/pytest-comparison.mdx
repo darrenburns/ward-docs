@@ -29,7 +29,7 @@ def num():
 
 @test("the number is 42")
 def _(n=num):
-    expect(n).equals(42)
+    assert n == 42
 ```
 
 Alternatively, you can use the `@using` decorator to bind a fixture to a positional argument: 
@@ -38,7 +38,7 @@ Alternatively, you can use the `@using` decorator to bind a fixture to a positio
 @test("the number is 42")
 @using(n=num)
 def _(n):
-    expect(n).equals(42)
+    assert n == 42
 ```
 
 To share ward fixtures across files, you can just import them as you would any other Python function. In both ward and pytest, you can execute teardown code in a fixture by placing it after a yield statement.
@@ -51,56 +51,6 @@ In ward, tests are indicated using the `@test(description)` decorator. The funct
 
 In both cases, tests are collected from modules starting with the word "test". With pytest, it can also end with "test".
 
-## Performance
-
-To check the performance overhead of both ward and pytest, I generated 10,000 passing test cases (only the name/description differs between each of them), each of which depends on two fixtures.
-
-The time taken to run all 10,000 passing tests was as follows (mean across 10 runs):
-
-- **pytest**: 20.9s
-- **ward**: 11.7s
-
-For pytest, each test looked like this:
-
-```python
-@pytest.fixture
-def one():
-    return 1
-    
-@pytest.fixture
-def two():
-    return 2
-
-# 10k instances of the test below
-def test_<num>(one, two):
-    assert one + two == 3
-```
-
-![](../../images/pytest-bench.png)
-
-In the case of ward, the test cases looked like this:
-
-```python
-@fixture
-def one():
-    return 1
-    
-@fixture
-def two():
-    return 2
-
-# 10k instances of the test below
-@test("I am test <num>")
-def _(one=one, two=two):
-    expect(one + two).equals(3)
-```
-
-Since ward has more verbose test output than pytest by default, it was configured to output test results in a style almost identical to pytest. With this configuration, both frameworks output a module name followed by a single dot representing each passing test in the module.
-
-![](../../images/ward-bench.png)
-
-This situation is of course unrealistic, but it does measure at a basic level the overhead of each framework when running simple tests.
-
 ## Fixture scopes
 
 Pytest currently supports `function`, `class`, `module`, `package` and `session` scopes. As of v5.2, it now supports dynamic scopes.
@@ -109,15 +59,11 @@ Ward currently supports `Test` (which I think is equivalent to pytest `function`
 
 ## Assertions
 
-Pytest supports assertion rewriting, meaning you can use the Python `assert` statement and still get detailed information on the assertion should it fail.
+Both Ward and Pytest support assertion rewriting, meaning you 
+can use the Python `assert` statement and still get detailed information on the assertion should it fail.
 
-Ward has an API for making assertions called the expect API, which is similar to popular testing frameworks in other languages. It performs no AST manipulation/inspection, and runs no import hooks unlike pytest. Currently, you can use `assert` in Ward, but you won't get detailed information/diffs about failing tests:
-
-![](../../images/ward-assertion-out.png)
-
-I may add the assert rewriting to Ward in the future, depending on the performance impact. I'd like to first understand how much of the pytest framework overhead comes from AST manipulation.
-
-Examining production Python codebases at FanDuel, I've found the vast majority of pytest `assert` statements we use are of the form `assert x`, `assert x == y` or `assert x in y`. Although I do believe the ability to use `assert` is "nicer", I'm not convinced that the overhead of learning a few simple API methods is problematic.
+Pytest rewrites assertions using an import hook, whereas Ward rewrites the bodies of
+tests that are collected.
 
 ## Parameterisation
 
@@ -137,7 +83,7 @@ def _(
   test_input=each("3+5", "2+4", "6*9"),
   expected=each(8, 6, 42),
 ):
-  expect(eval(test_input)).equals(expected)
+  assert eval(test_input) == expected
 ```
 
 There appears to be [no simple way](https://github.com/pytest-dev/pytest/issues/349) to use a fixture when parameterising a test in pytest. In ward, if you refer to a fixture when parameterising, it will be resolved:
@@ -152,7 +98,7 @@ def _(
   test_input=each("3+5", "2+4", "6*9"),
   expected=each(8, 6, forty_two),
 ):
-  expect(eval(test_input)).equals(expected)
+  assert eval(test_input) == expected
 ```
 
 Pytest also lets you parameterise fixtures themselves. Ward does not support this.
@@ -173,14 +119,9 @@ Ward relies on colours rather than symbols to present diffs:
 
 ![ward-output](../../images/ward-output.png)
 
-There's currently no option in Ward to get a symbolic diff for
-failing tests, meaning if your terminal or CI server doesn't support
-coloured output, diffs will be useless. This is a known limitation and
-will be fixed in a future iteration.
-
 ## Development
 
-Pytest is a mature production ready testing framework. On the other hand, Ward has not been production tested and is currently marked as an alpha.
+Pytest is a mature production ready testing framework. On the other hand, Ward has not been production tested and is currently in beta.
 
 ## Extensibility
 
