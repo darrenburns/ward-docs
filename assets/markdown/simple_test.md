@@ -10,5 +10,4 @@ def greeting(name):
 @test("greeting({name}) returns 'Hello, {name}!'")
 def _(name="Sam"):
     assert greeting(name) == f"Hello, {name}!"
-
 ```
