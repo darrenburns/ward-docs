@@ -23,7 +23,7 @@ Let's write a test to check that the endpoint `https://jsonplaceholder.typicode.
 
 ```python
 import httpx
-from ward import test, expect
+from ward import test
 
 BASE_URL = "https://jsonplaceholder.typicode.com/"
 
@@ -36,7 +36,7 @@ def _():
     todo_id = response.json()["id"]
     
     # Check that the ID is 1
-    expect(todo_id).equals(1)
+    assert todo_id == 1
     
     # Raise an exception to fail the test if
     # the status code is not a successful one
@@ -63,7 +63,7 @@ Now we'll check that passing a non-existent ID (`"invalid"`) to the endpoint res
 def _():
     response = httpx.get(f"{BASE_URL}todos/invalid")
     code = response.status_code
-    expect(code).equals(httpx.codes.NOT_FOUND)
+    assert code == httpx.codes.NOT_FOUND
 ```  
 
 Running our tests again, we see that JSONPlaceholder does indeed return a 404 when we pass a non-existent ID:

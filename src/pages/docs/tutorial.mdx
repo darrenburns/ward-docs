@@ -41,13 +41,13 @@ Our test is contained within a file called `test_contains.py`:
 
 ```python
 from contains import contains
-from ward import expect, test
+from ward import test
 
 @test("contains returns True when item is in list")
 def _():
     list_of_ints = list(range(100000))
     result = contains(list_of_ints, 5)
-    expect(result).equals(True)
+    assert result
 ```
 
 In this file, we've defined a single test function called `_`. It's been
@@ -80,7 +80,7 @@ Lets add another test.
 def _():
     list_of_ints = list(range(100000))
     result = contains(list_of_ints, -1)
-    expect(result).equals(False)
+    assert not result
 ```
 
 This test begins by instantiating the same list of 10 integers as the first
@@ -106,7 +106,7 @@ We can now rewrite our tests to make use of this fixture. Here's how we'd rewrit
 @test("contains returns False when item is not in list")
 def _(l=list_of_ints):
     result = contains(l, -1)
-    expect(result).equals(False)
+    assert not result
 ```
 
 By binding the name of the fixture as a default argument to the test, Ward will

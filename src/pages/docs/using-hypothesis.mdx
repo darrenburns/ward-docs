@@ -31,13 +31,13 @@ which obviously isn't true, but provides us an example of how Hypothesis works.
 ```python
 from hypothesis import given
 from hypothesis.strategies import lists, integers
-from ward import expect, test
+from ward import test
 
 @test("every list of integers contains the number 1")
 @given(l=lists(elements=integers()))
 def _(l):
     print(l)  # Let's print out the list to see what's happening!
-    expect(l).contains(1)
+    assert 1 in l
 ```
 
 Hypothesis calls the test above multiple times. Each time it calls it,

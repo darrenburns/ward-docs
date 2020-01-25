@@ -17,7 +17,7 @@ For example, you could mark tests with performance issues as "slow":
 @test("[slow] fetch the entire transaction log")
 def _(client=client):
     log = client.fetch_entire_log()
-    expect(log).equals([6, 2, 3, 1, 50])
+    assert log == [6, 2, 3, 1, 50]
 ```  
 
 Now you can run all tests that have been tagged as such:
@@ -33,12 +33,12 @@ tests where the method under test is `MyCounter.increment`"*:
 @test("[MyCounter.increment] works for negative integers")
 def _():
     m = MyCounter(initial=-1)
-    expect(m.increment()).equals(0)
+    assert m.increment() == 0
     
 @test("[MyCounter.increment] works for positive integers")
 def _():
     m = MyCounter(initial=1)
-    expect(m.increment()).equals(2)
+    assert m.increment() == 2
 ```
 
 Now if we wished to run only tests that probe the `MyCounter.increment` method,

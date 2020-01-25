@@ -26,12 +26,12 @@ def user():
 Now lets add a test that will make use of the `user` fixture.
 
 ```python
-from ward import expect, test
+from ward import test
 
 @test("fetch_user_by_id should return the expected User object")
 def _(expected_user=user):
     fetched_user = fetch_user_by_id(id=expected_user.id)
-    expect(fetched_user).equals(expected_user)
+    assert fetched_user == expected_user
 ```
 
 By directly binding the fixture as a default argument to our test function, we've told Ward to resolve the
@@ -54,7 +54,7 @@ from ward import expect, test, using
 @using(expected_user=user)
 def _(expected_user):
     fetched_user = fetch_user_by_id(id=expected_user.id)
-    expect(fetched_user).equals(expected_user)
+    assert fetched_user == expected_user
 ```
 
 In the example above, we tell Ward to bind the resolved value of the 
@@ -127,7 +127,7 @@ def user(name=name):
 
 @test("fixtures can be composed")
 def _(name=name, user=user):
-    expect(user["name"]).equals(name)
+    assert user["name"] == name
 ```
 
 In the example above, `user` depends on `name`, and the test depends on both `user` and `name`. 
@@ -150,7 +150,7 @@ Notice how we `yield` the value of the fixture in the test below. Ward will inje
 test, and after the test has run, all code below the `yield` will be executed.
 
 ```python
-from ward import test, expect, fixture
+from ward import test, fixture
 
 @fixture
 def database():
@@ -164,7 +164,7 @@ def database():
 def _(db=database):
     print("2. I'm running the test!")
     users = get_all_users(db)
-    expect(users).contains("Bob")
+    assert "Bob" in users
 ```
 
 The output captured by Ward whilst the test above runs is:

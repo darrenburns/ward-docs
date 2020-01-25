@@ -60,14 +60,14 @@ Now we'll create our first test, which will check that our app returns the corre
 visit our endpoint with a valid username (`"alice"`). The status code we expect to see in this case is an HTTP 200 (OK).
 
 ```python
-from ward import expect, fixture, test
+from ward import fixture, test
 
 # ... test_client fixture defined here ...
 
 @test("/users/alice returns an 200 OK")
 def _(client=test_client):
     res = client.get("/users/alice")
-    expect(res.data).equals("The user is alice")
+    assert res.data == "The user is alice"
 ```
 
 We can run our test by running `ward` in our terminal:
@@ -90,7 +90,7 @@ expect it to be.
 @test("/users/alice returns the body 'The user is alice'")
 def _(client=test_client):
     res = client.get("/users/alice")
-    expect(res.data).equals("The user is alice")
+    assert res.data == "The user is alice"
 ```
 
 Running our tests again, we see that our new test <FailMarker>FAILS</FailMarker>!
@@ -109,7 +109,7 @@ we thought when we wrote our test. Let's correct the test.
 @test("/users/alice returns the body 'The user is alice'")
 def _(client=test_client):
     res = client.get("/users/alice")
-    expect(res.data).equals(b"The user is alice")
+    assert res.data == b"The user is alice"
 ```
 
 If we run our tests again, we see that they both <PassMarker>PASS</PassMarker>!
