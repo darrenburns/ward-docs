@@ -110,6 +110,7 @@ const IndexPage = () => {
   const userTestFile = inFileExamples.find(e => e.frontmatter.fakeTabName === "user_fixtures.py")
   const fixturesFile = inFileExamples.find(e => e.frontmatter.fakeTabName === "test_users.py")
   const parameteriseFile = inFileExamples.find(e => e.frontmatter.fakeTabName === "test_utils.py")
+  const simpleExample = inFileExamples.find(e => e.frontmatter.fakeTabName === "test_simple.py")
 
   return (
       <DocsLayout>
@@ -127,10 +128,11 @@ const IndexPage = () => {
             Describe your tests <Link to="/guide/writing-tests">with strings</Link>, not <code
               style={tw`text-lg bg-gray-900 p-1`}>long_and_unreadable_function_names</code>.
           </IndexSectionIntroText>
+          <div dangerouslySetInnerHTML={{__html: simpleExample.html}}></div>
           <IndexTextExample>
             <TerminalExample>
               <TestOutputLine lineNumber="7" marker="PASS" moduleName="test_util"
-                              description="palindrome('noon') is True"/>
+                              description="greeting('Sam') return 'Hello, Sam!'"/>
               <TestOutputLine lineNumber="12" marker="FAIL" moduleName="test_users"
                               description="get_user(id=1) returns user 1"/>
               <TestOutputLine lineNumber="19" marker="SKIP" moduleName="test_todos"
@@ -154,7 +156,6 @@ const IndexPage = () => {
               </TerminalText>
             </TerminalExample>
           </IndexTextExample>
-
 
           <IndexSectionHeading>
             Modular test dependencies
@@ -237,7 +238,8 @@ const IndexPage = () => {
               </FeaturePane>
               <FeaturePane>
                 <PassMarker css={tw`font-semibold px-2`}>WORKS WITH HYPOTHESIS</PassMarker>
-                <TerminalText css={tw`mt-2`}>Works with Hypothesis out of the box, with deeper support planned.</TerminalText>
+                <TerminalText css={tw`mt-2`}>Works with Hypothesis out of the box, with deeper support
+                  planned.</TerminalText>
               </FeaturePane>
             </FeaturePaneList>
           </IndexTextExample>
@@ -249,7 +251,8 @@ const IndexPage = () => {
           </IndexSectionHeading>
           <IndexTextExample>
             <IndexSectionIntroText>
-              Ward is currently in development on <a href="https://github.com/darrenburns/ward">GitHub</a>. Contributions of any kind are welcomed!<br/>
+              Ward is currently in development on <a href="https://github.com/darrenburns/ward">GitHub</a>.
+              Contributions of any kind are welcomed!<br/>
             </IndexSectionIntroText>
             <IndexSectionIntroText>
               It's available on <a href="https://pypi.org/project/ward/">PyPI</a>, and can be installed using pip:
