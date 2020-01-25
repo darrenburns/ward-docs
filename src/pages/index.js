@@ -147,7 +147,7 @@ const IndexPage = () => {
           <IndexTextExample>
             <TerminalExample>
               <TerminalText>
-                Showing diff of <Green>expected value</Green> vs <Red>actual value</Red>:<br/><br/>
+                Showing diff of <Green>LHS</Green> vs <Red>RHS</Red>:<br/><br/>
                 <Green css={{marginLeft: 40}}>['apples',
                   'bananas', <GreenHighlight>'kiwi</GreenHighlight>s']</Green><br/>
                 <Red css={{marginLeft: 40}}>['apples', 'bananas', <RedHighlight>'orange</RedHighlight>s']</Red>

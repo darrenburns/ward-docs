@@ -9,5 +9,5 @@ from user_fixtures import user
 @test("get_user returns the correct user")
 def _(expected=user):
     found = get_user(id=expected.id)
-    expect(found).equals(expected)
+    assert found == expected
 ```

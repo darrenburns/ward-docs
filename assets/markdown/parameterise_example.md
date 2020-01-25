@@ -11,6 +11,6 @@ def _(
     expected=each(s, s, "hello w...", "he..."),
 ):
     result = truncate(text, num_chars)
-    expect(result).equals(expected)
+    assert result == expected
 
 ```
