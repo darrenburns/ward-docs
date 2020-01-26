@@ -4,6 +4,7 @@ import {graphql, useStaticQuery} from "gatsby"
 import DocsLayout from "../components/docs-layout"
 import tw from "tailwind.macro"
 import {
+  Cyan,
   Flex,
   Green,
   GreenHighlight,
@@ -149,10 +150,10 @@ const IndexPage = () => {
           <IndexTextExample>
             <TerminalExample>
               <TerminalText>
-                Showing diff of <Green>LHS</Green> vs <Red>RHS</Red>:<br/><br/>
-                <Green css={{marginLeft: 40}}>['apples',
+                <Cyan><strong>Comparison:</strong></Cyan> <Green>LHS</Green> vs <Red>RHS</Red> shown below<br/><br/>
+                <Green css={{marginLeft: 20}}>['apples',
                   'bananas', <GreenHighlight>'kiwi</GreenHighlight>s']</Green><br/>
-                <Red css={{marginLeft: 40}}>['apples', 'bananas', <RedHighlight>'orange</RedHighlight>s']</Red>
+                <Red css={{marginLeft: 20}}>['apples', 'bananas', <RedHighlight>'orange</RedHighlight>s']</Red>
               </TerminalText>
             </TerminalExample>
           </IndexTextExample>

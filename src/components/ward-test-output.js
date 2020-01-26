@@ -39,6 +39,10 @@ export const Green = tw.span`
   text-green-600
 `
 
+export const Cyan = tw.span`
+  text-teal-500
+`
+
 export const Blue = tw.span`
   text-blue-600
 `
