@@ -146,6 +146,34 @@ or regular expression matching.
 
 (TODO)
 
+## Output capturing
+
+By default, Ward captures everything that is written to standard output and standard error
+as your tests run. If a test fails, everything that was printed during the time it was running
+will be printed as part of the failure output.
+
+![example showing ward capturing output](../../images/captured-output.png)
+
+With output capturing enabled, if you run a debugger such as `pdb` during test execution, everything
+it writes to the stdout will be captured by Ward too.
+
+### Disabling output capturing
+
+If you wish to disable output capturing you can do so using the
+`--no-capture-output` flag on the command line. 
+
+<TerminalCommand>
+ward <Blue>--no-capture-output</Blue>
+</TerminalCommand>
+
+You can also disable output capturing using the `capture-output` key in
+your `pyproject.toml`:
+
+```text
+[tool.ward]
+capture-output = false
+```
+
 ## Randomise test execution order
 
 <TerminalCommand>
