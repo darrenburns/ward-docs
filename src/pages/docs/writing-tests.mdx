@@ -45,16 +45,18 @@ During the test run, Ward will print the descriptive test name to the console:
     <TestOutputLine marker="FAIL" lineNumber="7" moduleName="test_math" description="1 + 2 == 3" />
 </TerminalExample>
 
+Tests will only be collected from modules with names that start with `"test_"` or end with `"_test"`.
+
 ## Using `assert`
 
 Ward lets you use plain `assert` statements when writing your tests, but gives you considerably
 more information should the assertion fail than a typical `assert` statement. It does this by 
 modifying the abstract syntax tree (AST) of any collected tests. Occurrences of the `assert`
-statement are replaced with a function call.
+statement are replaced with a function call, depending on which comparison operator was used.
 
-<Warning>As of `0.28.0b0`, assertion rewriting only applies to assertions of the form `assert x == y`, and to
-assertions that appear directly in your tests.</Warning>
-<br/>
+Currently, Ward only rewrites `assert` statements that appear directly in the body of your tests.
+If you use helper methods that contain `assert` statements and would like detailed output, you can 
+use the helper `assert_{op}` methods in `ward.expect`.
 
 ## Parameterised testing
 

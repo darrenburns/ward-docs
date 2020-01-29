@@ -6,6 +6,8 @@ sortKey: 3
 ---
 import {TestOutputLine, TerminalExample} from "../../components/ward-test-output"
 import Warning from "../../components/warning"
+import {CommitExample} from  "../../components/docs-layout"
+
 
 A *fixture* is a function that provides tests with the data they need in order to run.
 
@@ -36,6 +38,16 @@ def _(expected_user=user):
 
 By directly binding the fixture as a default argument to our test function, we've told Ward to resolve the
 fixture and inject it into our test. Inside our test, the variable `expected_user` is the object `User(id=1, name="sam")`.
+
+### Real-world examples
+
+<CommitExample hash={"097348834b444cb55c7505aa41aa68e4ed09996c"} 
+  url={"https://github.com/darrenburns/ward/commit/097348834b444cb55c7505aa41aa68e4ed09996c"}
+  title={"Extracting common setup code into a fixture"} 
+  repo={"darrenburns/ward"}
+  description={"This is an example of a commit from the Ward repo where setup code common between multiple\
+  tests was extracted into a fixture, which was then shared between the tests."} />
+
 
 ## The `@using` decorator
 

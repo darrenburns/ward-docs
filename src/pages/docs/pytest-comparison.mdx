@@ -49,7 +49,7 @@ Pytest test names must begin with the word "test". They can be functions or meth
 
 In ward, tests are indicated using the `@test(description)` decorator. The function itself can be named `_`, since the name would likely just repeat the description in a less readable form. Class level tests are not supported.
 
-In both cases, tests are collected from modules starting with the word "test". With pytest, it can also end with "test".
+In both cases, tests are collected from modules starting with `"test_"` or ending with `"_test"`.
 
 ## Fixture scopes
 
