@@ -15,22 +15,27 @@ This will recursively search through the current directory
 for modules with a name starting with `test_`, and execute
 any tests contained in the modules it finds.
 
-
-## Specifying test directories
+## Specifying test modules or directories
 
 <TerminalCommand>
 ward --path <Blue>PATH_TO_TESTS</Blue>
 </TerminalCommand>
 
-You can run tests in a specific directory using the `--path` option.
+You can run tests in a specific directory or module using the `--path` option.
 For example, to run all tests inside a directory called `tests`:
 
 <TerminalCommand>
-ward --path <Blue>"tests"</Blue>
+ward --path <Blue>tests</Blue>
 </TerminalCommand>
 
 To run tests in the current directory, you can just type `ward`, which
 is functionally equivalent to `ward --path .`
+
+You can also directly specify a test module, for example:
+
+<TerminalCommand>
+ward --path <Blue>tests/api/test_get_user.py</Blue>
+</TerminalCommand>
 
 You can supply multiple test directories by providing multiple `--path` options: 
 
@@ -38,9 +43,24 @@ You can supply multiple test directories by providing multiple `--path` options:
 ward --path <Blue>"unit"</Blue> --path <Blue>"integration"</Blue>
 </TerminalCommand>
 
-Ward will run all tests it finds across all given directories.
-If one of the specified directories is contained within another, it won't 
+Ward will run all tests it finds across all given paths.
+If one of the specified paths is contained within another, it won't 
 repeat the same test more than once.
+
+## Excluding modules or directories
+<TerminalCommand>
+ward --exclude <Blue>glob1</Blue> --exclude <Blue>glob2</Blue>
+</TerminalCommand>
+
+You can tell Ward to ignore specific modules or directories using the `--exclude`
+command line option. This option can be supplied multiple times, and supports glob patterns.
+
+To configure excluded directories in a more permanent manner, you can use `pyproject.toml`:
+
+```text
+[tool.ward]
+exclude = ["glob1", "glob2"]
+```
 
 ## Customising the output with `--test-output-style`
 
