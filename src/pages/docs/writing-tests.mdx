@@ -188,6 +188,23 @@ def _():
         1/0
 ```
 
+If you need to access the exception object that your code raised, you can
+use `with raises(<exc_type>) as <exc_object>`.
+
+```python
+def my_func():
+    raise Exception("oh no!")
+
+@test("the message is 'oh no!'")
+def _():
+    with raises(Exception) as ex:
+        my_func()
+    assert str(ex.raised) == "oh no!"
+```
+
+Note that `ex` is only populated after the context manager exits, so
+be careful with your indentation.
+
 ### Real-world examples
 
 <CommitExample hash={"f85777bfaf83834381450a9ed686d777a5d05bab"}
