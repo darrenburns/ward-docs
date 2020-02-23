@@ -1,4 +1,4 @@
-latestVersion = "0.35.0b0"
+latestVersion = "0.36.0b0"
 
 module.exports = {
   siteMetadata: {

@@ -226,18 +226,17 @@ ward --show-slowest <Blue>NUMBER_TO_SHOW</Blue>
 
 Use `--show-slowest 10` to print the 10 slowest tests after the test run completes. 
 
-## Performing a dry run **<Red> (Proposal)</Red>**
+## Performing a dry run
 
 <TerminalCommand>
 ward --dry-run
 </TerminalCommand>
 
 Use `--dry-run` to simulate a test run. Ward will collect the tests and output as normal, but the
-tests themselves won't actually run. When using `--dry-run`, tests will return with an outcome of `DRYRUN`.
+tests themselves won't actually run, nor will any fixtures your tests depend on. When using `--dry-run`, 
+tests will return with an outcome of `DRYRUN` or `SKIP`.
 
 This is useful for determining which tests Ward *would* run if invoked normally.
-
-Tracking proposal on GitHub: https://github.com/darrenburns/ward/issues/129
 
 ## Outputting to a file **<Red> (Proposal)</Red>**
 
