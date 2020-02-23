@@ -7,7 +7,7 @@ description: "2. Import it and bind it as a default argument. Ward will inject t
 from user_fixtures import user
 
 @test("get_user returns the correct user")
-def _(expected=user):
-    found = get_user(id=expected.id)
+async def _(expected=user):
+    found = await get_user(id=expected.id)
     assert found == expected
 ```

@@ -220,6 +220,10 @@ const IndexPage = () => {
           <IndexTextExample>
             <FeaturePaneList>
               <FeaturePane>
+                <PassMarker css={tw`font-semibold px-2`}>ASYNC SUPPORT</PassMarker>
+                <TerminalText css={tw`mt-2`}>Write async tests and fixtures.</TerminalText>
+              </FeaturePane>
+              <FeaturePane>
                 <PassMarker css={tw`font-semibold px-2`}>CROSS PLATFORM</PassMarker>
                 <TerminalText css={tw`mt-2`}>Tested on Windows, Mac OS, and Linux systems.</TerminalText>
               </FeaturePane>
@@ -227,12 +231,12 @@ const IndexPage = () => {
                 <PassMarker css={tw`font-semibold px-2`}>ZERO CONFIG</PassMarker>
                 <TerminalText css={tw`mt-2`}>Sensible defaults make configuration optional.</TerminalText>
               </FeaturePane>
+            </FeaturePaneList>
+            <FeaturePaneList>
               <FeaturePane>
                 <PassMarker css={tw`font-semibold px-2`}>TEST SEARCH</PassMarker>
                 <TerminalText css={tw`mt-2`}>Loose querying of test code for quick development.</TerminalText>
               </FeaturePane>
-            </FeaturePaneList>
-            <FeaturePaneList>
               <FeaturePane>
                 <PassMarker css={tw`font-semibold px-2`}>LOW OVERHEAD</PassMarker>
                 <TerminalText css={tw`mt-2`}>Roughly half the framework overhead of Pytest.</TerminalText>
