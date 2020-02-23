@@ -217,3 +217,36 @@ you can use the `--fail-limit` option. To have a run end immediately after 5 tes
 <TerminalCommand>
 ward --fail-limit <Blue>5</Blue>
 </TerminalCommand>
+
+## Finding slow running tests
+
+<TerminalCommand>
+ward --show-slowest <Blue>NUMBER_TO_SHOW</Blue>
+</TerminalCommand>
+
+Use `--show-slowest 10` to print the 10 slowest tests after the test run completes. 
+
+## Performing a dry run **<Red> (Proposal)</Red>**
+
+<TerminalCommand>
+ward --dry-run
+</TerminalCommand>
+
+Use `--dry-run` to simulate a test run. Ward will collect the tests and output as normal, but the
+tests themselves won't actually run. When using `--dry-run`, tests will return with an outcome of `DRYRUN`.
+
+This is useful for determining which tests Ward *would* run if invoked normally.
+
+Tracking proposal on GitHub: https://github.com/darrenburns/ward/issues/129
+
+## Outputting to a file **<Red> (Proposal)</Red>**
+
+<TerminalCommand>
+ward --output-json <Blue>PATH</Blue>
+</TerminalCommand>
+
+Use `--output-json` to write test results to a JSON file after the test run completes.
+
+If the file doesn't exist, Ward will create it. If the file does exist, Ward will overwrite it.
+
+Tracking proposal on GitHub: https://github.com/darrenburns/ward/issues/123
