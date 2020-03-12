@@ -4,7 +4,7 @@ path: "/guide/running-tests"
 section: "user guide"
 sortKey: 2
 ---
-import {TerminalCommand, TestOutputLine, TerminalText, TerminalExample, Green, Grey, Red, Blue} from "../../components/ward-test-output"
+import {TerminalCommand, TestOutputLine, TerminalText, TerminalExample, Green, Grey, Red, Blue, Cyan} from "../../components/ward-test-output"
 
 To find and run tests in your project, you can run `ward` without
 any arguments.
@@ -62,6 +62,76 @@ To configure excluded directories in a more permanent manner, you can use `pypro
 exclude = ["glob1", "glob2"]
 ```
 
+## Tag expressions: Selecting tests with `--tags` 
+
+<TerminalCommand>ward --tags <Blue>EXPR</Blue></TerminalCommand>
+
+A *tag expression* is an infix boolean expression that can be used to accurately select
+a subset of tests you wish to execute. Tests are tagged using the `tags` keyword argument
+of the `@test` decorator (e.g. `@test("eggs are green", tags=["unit"])`.)
+
+Here are some examples of tag expressions and what they mean:
+
+| Tag Expression | Meaning |
+| ------------- |-------------|
+| `slow`      | tests tagged with slow |
+| `unit and integration`      | tests tagged with both `unit` and `integration` |
+| `big and not slow` | tests tagged with `big` that aren't also tagged with `slow` |
+| `android or ios` | tests tagged with either `android` or `ios` |
+
+Here's how you would run only tests that are tagged with either `android` or `ios` in practice:
+
+<TerminalCommand>ward --tags <Blue>"android <Cyan><em>or</em></Cyan> ios"</Blue></TerminalCommand>
+
+
+## Searching: Selecting tests with `--search`
+
+<TerminalCommand>ward --search <Blue>QUERY</Blue></TerminalCommand>
+
+You can choose to limit which tests are collected and ran by Ward 
+using the `--search STRING` option. Module names, test descriptions *and test function bodies*
+will be searched, and those which contain `STRING` will be ran. Here are
+some examples:
+
+**Run all tests that call the `fetch_users` function:**
+
+<TerminalCommand>
+    ward --search <Blue>"fetch_users("</Blue>
+</TerminalCommand>
+
+
+**Run all tests that check if a `ZeroDivisionError` is raised:**
+
+<TerminalCommand>
+ward --search <Blue>"raises(ZeroDivisionError)"</Blue>
+</TerminalCommand>
+
+**Run all tests decorated with the `@xfail` decorator:**
+<TerminalCommand>
+ward --search <Blue>"@xfail"</Blue>
+</TerminalCommand>
+
+**Run a test described as `"my_function should return False"`:**
+
+<TerminalCommand>
+ward --search <Blue>"my_function should return False"</Blue>
+</TerminalCommand>
+
+**Running tests inside a module:**
+
+The search takes place on the fully qualified name, so you can run a single
+module (e.g. `my_module`) using the following command:
+
+<TerminalCommand>
+ward --search <Blue>my_module.</Blue>
+</TerminalCommand>
+
+Of course, if a test name or body contains the string `"my_module."`, that test
+will also be selected and ran. 
+
+This approach is useful for quickly querying tests and running those which match a
+simple query, making it useful for development.
+
 ## Customising the output with `--test-output-style`
 
 <TerminalCommand>ward --test-output-style [<Blue>test-per-line</Blue>|<Blue>dots-module</Blue>|<Blue>dots-global</Blue>]</TerminalCommand>
@@ -108,63 +178,6 @@ modules (`--test-output-style=dots-global`):
       <Green>..</Green><Red>F</Red>
     </TerminalText>
 </TerminalExample>
-
-## Approximate test selection with `--search`
-
-<TerminalCommand>ward --search <Blue>QUERY</Blue></TerminalCommand>
-
-You can choose to limit which tests are collected and ran by Ward 
-using the `--search STRING` option. Test names, descriptions *and test function bodies*
-will be searched, and those which contain `STRING` will be ran. Here are
-some examples:
-
-**Run all tests that call the `fetch_users` function:**
-
-<TerminalCommand>
-    ward --search <Blue>"fetch_users("</Blue>
-</TerminalCommand>
-
-
-**Run all tests that check if a `ZeroDivisionError` is raised:**
-
-<TerminalCommand>
-ward --search <Blue>"raises(ZeroDivisionError)"</Blue>
-</TerminalCommand>
-
-**Run all tests decorated with the `@xfail` decorator:**
-<TerminalCommand>
-ward --search <Blue>"@xfail"</Blue>
-</TerminalCommand>
-
-**Run a test described as `"my_function should return False"`:**
-
-<TerminalCommand>
-ward --search <Blue>"my_function should return False"</Blue>
-</TerminalCommand>
-
-**Running tests inside a module:**
-
-The search takes place on the fully qualified name, so you can run a single
-module (e.g. `my_module`) using the following command:
-
-<TerminalCommand>
-ward --search <Blue>my_module.</Blue>
-</TerminalCommand>
-
-Of course, if a test name or body contains the string `"my_module."`, that test
-will also be selected and ran. 
-
-This approach is useful for quickly querying tests and running those which match a
-simple query, making it useful for development.
-
-## Specific test selection
-
-Sometimes you want to be very specific when declaring which tests to run.
-
-Ward will provide an option to query tests on name and description using substring
-or regular expression matching.
-
-(TODO)
 
 ## Output capturing
 

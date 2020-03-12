@@ -4,7 +4,7 @@ path: "/guide/writing-tests"
 section: "user guide"
 sortKey: 1
 ---
-import {TestOutputLine, TerminalExample, XpassMarker, XfailMarker, SkipMarker, TerminalText} from "../../components/ward-test-output"
+import {TerminalCommand, TestOutputLine, TerminalExample, XpassMarker, XfailMarker, SkipMarker, TerminalText} from "../../components/ward-test-output"
 import Warning from "../../components/warning"
 import {CommitExample} from  "../../components/docs-layout"
 
@@ -17,9 +17,9 @@ Ward lets you describe your tests using strings, allowing you to be as descripti
 as you'd like:
 
 ```python
-from ward import fixture, test
+from ward import test
 
-@test("1 + 2 == 3")
+@test("simple addition")
 def _():
     assert 1 + 2 == 3
 ```
@@ -46,6 +46,55 @@ During the test run, Ward will print the descriptive test name to the console:
 </TerminalExample>
 
 Tests will only be collected from modules with names that start with `"test_"` or end with `"_test"`.
+
+## Testing `async` code
+
+You can declare any test or fixture as `async` in order to test asynchronous code:
+
+```python
+@fixture
+async def post():
+    return await create_post("hello world")
+
+@test("a newly created post has no children")
+async def _(p=post):
+    children = await p.children
+    assert children == [] 
+
+@test("a newly created post has an id > 0")
+def _(p=post):
+    assert p.id > 0
+```
+
+## Tagging tests
+
+You can tag tests using the `tags` keyword argument of the `@test` decorator:
+
+```python
+@test("simple addition", tags=["unit", "regression"])
+def _():
+    assert 1 + 2 == 3
+```
+
+Tags provide a powerful means of grouping tests and associating queryable metadata with them.
+
+When running your tests, you can filter which ones you want to run using tag expressions.
+
+Here are some ways you could use tags:
+
+* Linking a test to a ticket from an issue tracker: `"BUG-123"`, `"PULL-456"`, etc.
+* Describe what type of test it is: `"small"`, `"medium"`, `"big"`, `"unit"`, `"integration"`, etc.
+* Specify which endpoint your test calls: `"/users"`, `"/tweets"`, etc.
+* Specify which platform a test targets: `"windows"`, `"unix"`, `"ios"`, `"android"`
+
+With your tests tagged you can now run only the tests you care about. To ask Ward to run only
+integration tests which target any mobile platform, you might invoke it like so:
+
+<TerminalCommand>
+ward --tags "integration and (ios or android)"
+</TerminalCommand> 
+
+For a deeper look into tag expressions, see the [running tests](/guide/running-tests) page.
 
 ## Using `assert`
 
@@ -172,10 +221,6 @@ Currently, `each` can only be used in the signature of *tests*.
   title={"Testing a mapping function with parameterise"} 
   repo={"darrenburns/ward"}
   description={"Ward maps the outcome of a test to a colour that will appear in your terminal. This test uses parameterisation to check that all of these outcomes map to the correct colour."} />
-
-## Testing `async` code
-
-You can use `async`/`await` out-of-the-box with Ward. Simply define any test or fixture with `async def`, and Ward will do the rest.
 
 ## Checking for exceptions
 

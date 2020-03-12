@@ -4,6 +4,7 @@ import {graphql, useStaticQuery} from "gatsby"
 import DocsLayout from "../components/docs-layout"
 import tw from "tailwind.macro"
 import {
+  Blue,
   Cyan,
   Flex,
   Green,
@@ -12,7 +13,7 @@ import {
   OutputLineRightCol,
   PassMarker,
   Red,
-  RedHighlight,
+  RedHighlight, TerminalCommand,
   TerminalExample,
   TerminalText,
   TestOutputLine,
@@ -27,8 +28,8 @@ const IndexContentWrapper = tw.section`
   text-left mt-16 px-6 lg:px-12 xl:px-26 pb-12
 `
 
-const IndexTextIntro = tw.h3`
-  font-semibold
+const IndexTextIntro = tw.div`
+  font-semibold ml-2 mb-8 text-xl
 `
 
 const IndexTextExample = tw.div`
@@ -132,8 +133,8 @@ const IndexPage = () => {
           <div dangerouslySetInnerHTML={{__html: simpleExample.html}}></div>
           <IndexTextExample>
             <TerminalExample>
-              <TestOutputLine lineNumber="7" marker="PASS" moduleName="test_util"
-                              description="greeting('Sam') return 'Hello, Sam!'"/>
+              <TestOutputLine lineNumber="7" marker="PASS" moduleName="test_food"
+                              description="the eggs are green"/>
               <TestOutputLine lineNumber="12" marker="FAIL" moduleName="test_users"
                               description="get_user(id=1) returns user 1"/>
               <TestOutputLine lineNumber="19" marker="SKIP" moduleName="test_todos"
@@ -156,6 +157,24 @@ const IndexPage = () => {
                 <Red css={{marginLeft: 20}}>['apples', 'bananas', <RedHighlight>'orange</RedHighlight>s']</Red>
               </TerminalText>
             </TerminalExample>
+          </IndexTextExample>
+
+          <IndexSectionHeading>
+            Powerful test tagging and selection
+          </IndexSectionHeading>
+          <IndexSectionIntroText>
+            Tag your tests and use tag expressions to select precisely which tests to run.
+          </IndexSectionIntroText>
+          <IndexTextExample>
+            <TerminalCommand>
+              ward --tags <Blue>"(unit <Cyan><em>or</em></Cyan> integration) <Cyan><em>and</em></Cyan> slow"</Blue>
+            </TerminalCommand>
+            <IndexSectionIntroText>
+              For example, tag tests with an issue tracker number to easily run tests associated with an issue:
+            </IndexSectionIntroText>
+            <TerminalCommand>
+              ward --tags <Blue>"FEATURE-1234 <Cyan><em>or</em></Cyan> FEATURE-4567"</Blue>
+            </TerminalCommand>
           </IndexTextExample>
 
           <IndexSectionHeading>

@@ -17,6 +17,11 @@ const overrides = {
 }
 
 typographyConfig.overrideThemeStyles = () => ({
+  "h2": {"color": "#38a169"},
+  "h3": {"color": "#38a169"},
+  "h4": {"color": "#38a169"},
+  "h5": {"color": "#38a169"},
+  "h6": {"color": "#38a169"},
   "pre": {
     "margin-bottom": "34px",
   }
